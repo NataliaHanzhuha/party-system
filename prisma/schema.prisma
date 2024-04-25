@@ -3,7 +3,53 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Client {
+  id                String  @id @default(cuid())
+  name              String
+  email             String
+  invitationEmailId String?
+  guests            Guest[]
+  wishes            Wish[]
+}
+
+model Guest {
+  id           String      @id @default(cuid())
+  name         String
+  email        String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  client       Client?     @relation(fields: [clientId], references: [id])
+  clientId     String?
+  extraPerson1 String?
+  status       GuestStatus @default(NEW)
+
+  @@unique([email])
+}
+
+enum GuestStatus {
+  NEW
+  EDITED
+  REJECTED
+}
+
+model Wish {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  text      String
+  name      String
+  client    Client?  @relation(fields: [clientId], references: [id])
+  clientId  String?
+}
+
+model Admin {
+  id    String @id @default(cuid())
+  email String
+  name  String
+
+  @@unique([email])
 }
