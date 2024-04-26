@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
       where: {id},
       include: {
         guests: true,
-        wishes: true
+        wishes: true,
+        // invitationPage: true
       }
     });
 

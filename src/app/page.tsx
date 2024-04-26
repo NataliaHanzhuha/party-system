@@ -1,24 +1,12 @@
-'use server';
+'use client'
+import { auth, signOut } from '@/app/auth';
+import { redirect } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
-import axios from 'axios';
-import ClientList from '@/app/clients/page';
-import useSWR from 'swr';
-
-export default async function Home() {
-  // const fetcher = () => axios.get('/api/client').then(res => res.data)
-  // const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
-  // try {
-  // const res = await axios.get('/api/client');
-  // data = res.data;
-  // console.log(res);
-
-  // } catch (error) {}
-  // const clients = await fetchClients();
-  // console.log(data);
-  return <main>
-    {/*{data.length}*/}
-    {/*{clients.map((client) =>*/}
-    {/*  <Link key={client.id}*/}
-    {/*        href={`/clients/${client.id}`}>{client.name}</Link>)}*/}
+export async function Home() {
+  return <main className="flex flex-col gap-3">
+    <h1>Protected</h1>
+    {/*<a href="/login">sign out</a>*/}
+    {/*<a href="/">public route</a>*/}
   </main>;
 }

@@ -1,11 +1,11 @@
-'use client';
-
+'use client'
+import Link from 'next/link';
 import axios from 'axios';
 import useSWR from 'swr';
-import selectComponent from '@/app/[clientId]/invitation/select-view';
 import Loading from '@/components/loading';
+import selectComponent from '@/app/[clientId]/wishes/select-view';
 
-export default function ClientData({params}: any) {
+export default function WishForm({params}: any) {
   const {clientId} = params;
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
   const {data, error, isLoading} = useSWR('/api/client?id=' + clientId, fetcher);
@@ -18,5 +18,5 @@ export default function ClientData({params}: any) {
     return 'no such client';
   }
 
-  return selectComponent(clientId, data);
+  return selectComponent(data);
 }

@@ -9,12 +9,18 @@ datasource db {
 }
 
 model Client {
-  id                String  @id @default(cuid())
+  id                String             @id @default(cuid())
   name              String
   email             String
   invitationEmailId String?
   guests            Guest[]
   wishes            Wish[]
+  invitationPage    InvitationPageEnum? @default(JULIETPAGE)
+}
+
+enum InvitationPageEnum {
+  DEFAULT
+  JULIETPAGE
 }
 
 model Guest {
@@ -47,9 +53,10 @@ model Wish {
 }
 
 model Admin {
-  id    String @id @default(cuid())
+  id    String  @id @default(cuid())
   email String
   name  String
+  hash  String?
 
   @@unique([email])
 }
