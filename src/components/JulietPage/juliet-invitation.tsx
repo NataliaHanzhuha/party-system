@@ -78,7 +78,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <Input type="email"
              className={styles.field}/>
     </Form.Item>
-    <Form.Item name="extraPerson"
+    <Form.Item name="extraPerson1"
                className={styles.label}
                label="Extra person Name">
       <Input type="text"
@@ -98,7 +98,7 @@ export default function JulietInvitation({data}: any) {
   const initialValue = {
     name: data?.name ?? '',
     email: data?.email ?? '',
-    extraPerson: data?.extraPerson ?? undefined,
+    extraPerson1: data?.extraPerson1 ?? undefined,
     clientId: data?.client?.id,
     id: data?.id ?? null
   };
