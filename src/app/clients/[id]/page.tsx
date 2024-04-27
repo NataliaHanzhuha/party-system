@@ -4,6 +4,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Guest } from '@prisma/client';
+import { sendNewGuestEvent } from '@/utills/sendGrid';
 
 interface PostsEditProps {
   params: {
@@ -26,6 +27,10 @@ export default function ClientData({params}: PostsEditProps) {
     return 'no client yet';
   }
 
+  const getEmailWIthGuests = async () => {
+    await axios.get('/api/client/list?id=' + id);
+  };
+
   return <>
     <Title level={2}
            style={{marginBottom: 0}}>
@@ -37,6 +42,7 @@ export default function ClientData({params}: PostsEditProps) {
     <Divider type="vertical" />
     <Link href={`../../${data?.id}/wishes/list`}>Wish list link</Link>
 
+    <button onClick={getEmailWIthGuests}>get list of guests</button>
     <Table dataSource={data?.guests}>
       <Table.Column title="Name"
                     key="name"
@@ -55,7 +61,7 @@ export default function ClientData({params}: PostsEditProps) {
                     dataIndex="status"/>
       <Table.Column title={() => <Link href={`../../${data?.id}/invitation`}>Add guest link</Link>}
                     dataIndex=""
-                    key="x"
+                    key="action"
                     render={(value: Guest) => <>
                       <Link href={`../../${data?.id}/invitation/${value?.id}`}>Edit</Link>
                       <Divider type="vertical" />

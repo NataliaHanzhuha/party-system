@@ -13,7 +13,7 @@ export default function JulietCancelInvitation({data}: any) {
     isAgreed(!!Object.keys(guest)?.length);
   };
 
-  const message = `Are you sure you want cancel your Reservation?`;
+  const message = `Are you sure you want to cancel your Reservation?`;
   const firstFormView = agreedForRSVP === null
     ? firstForm(message, () => cancelGuest(data), () => isAgreed(false))
     : agreedForRSVP

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
-import { Guest } from '@prisma/client';
+import { Client, Guest } from '@prisma/client';
+import { sendNewGuestEvent } from '@/utills/sendGrid';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');
@@ -26,9 +27,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const clientId: string | null = request.nextUrl.searchParams.get('clientId');
+  const clientId: string = request.nextUrl.searchParams.get('clientId')!;
   const {name, email, extraPerson1} = await request.json();
-  console.log(clientId, name, email);
 
   const isExistGuest: any | null = db.guest.findFirst({where: {email}});
 
@@ -39,7 +39,12 @@ export async function POST(request: NextRequest) {
   const guest = await db.guest.create({
     data: {name, clientId, email, extraPerson1, status: 'NEW'},
   });
-  return NextResponse.json(guest);
+
+  const client: any = await db.client.findUnique(
+    {where: {id: clientId}});
+  console.log('POST', client, guest);
+  return await sendNewGuestEvent(client, guest);
+  // return NextResponse.json(guest);
 }
 
 export async function PATCH(request: NextRequest) {
