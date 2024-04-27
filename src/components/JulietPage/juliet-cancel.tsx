@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper, firstForm } from '@/components/JulietPage/elements';
+import styles from './juliet-invitation.module.css';
 
 export default function JulietCancelInvitation({data}: any) {
   const [agreedForRSVP, isAgreed] = useState<boolean | null>(null);
@@ -12,12 +13,12 @@ export default function JulietCancelInvitation({data}: any) {
     isAgreed(!!Object.keys(guest)?.length);
   };
 
-  const message = ` You are sure you want cancel your Registration to ${data?.client?.name}'s 50th birthday party (28.09.2024)`;
+  const message = `Are you sure you want cancel your Reservation?`;
   const firstFormView = agreedForRSVP === null
     ? firstForm(message, () => cancelGuest(data), () => isAgreed(false))
     : agreedForRSVP
-      ? firstFormReject(data?.client?.name)
-      : finalTmpl(data?.client?.name);
+      ? <div className={styles.notification}>Your Reservation is now cancelled.</div>
+      : <div className={styles.notification}>Thank you for your Confirmation; your Reservation will remain.</div>;
 
   return <CustomThemeWrapper>{firstFormView}</CustomThemeWrapper>;
 }

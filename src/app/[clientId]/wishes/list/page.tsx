@@ -24,10 +24,10 @@ export default function WishList({params}: any) {
     return `${d.toDateString()} ${d.toLocaleTimeString()}`;
   }
 
-  return <div className={styles.commentWrapper}>
+  return <div className={styles.page}>
     <h2 style={{textAlign: 'center'}}>Wishes for {data?.name}</h2>
 
-    <div >
+    <div className={styles.commentWrapper}>
       {data?.wishes?.map((wish: Wish, index: number) => {
         return <div key={index} className={styles.comment}>
           <p>{wish?.text}</p>

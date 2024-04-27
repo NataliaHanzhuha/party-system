@@ -88,6 +88,8 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <SubmitButton form={form}
                     saved={submit}>RSVP</SubmitButton>
     </Form.Item>
+
+    <p style={{textAlign: 'center'}}>This event is strictly by Invitation</p>
   </Form>;
 };
 
@@ -102,10 +104,10 @@ export default function JulietInvitation({data}: any) {
   };
   const [agreedForRSVP, isAgreed] = useState<boolean | null>(null);
   const [isSavedGuest, setSavedGuest] = useState<Guest | null>(null);
-  const message = `You are cordially Invited to ${data?.client?.name}'s 50th birthday party (28.09.2024)`;
-
+  const title = `${data?.client?.name}'s 50th birthday party (28.09.2024)`;
+  const message = `You are cordially Invited to ${title}`;
   const formTmp = <div>
-    <h2 className={styles.heading}>{message}</h2>
+    <h2 className={styles.heading}>{title}</h2>
 
     <InvitationForm form={form}
                     initialValue={initialValue}
@@ -113,14 +115,15 @@ export default function JulietInvitation({data}: any) {
   </div>;
 
   const firstFormView = agreedForRSVP === null
-    ? firstForm(message, () => isAgreed(true), () => isAgreed(false))
+    ? firstForm(message, () => isAgreed(true), () => isAgreed(false),
+      <h2>Do you want to RSVP?</h2>)
     : agreedForRSVP
       ? formTmp
-      : firstFormReject(data?.client?.name);
+      : firstFormReject(data?.client?.name, data?.client?.id);
 
   return <CustomThemeWrapper>
     {isSavedGuest
-      ? finalTmpl(data?.client?.name)
+      ? finalTmpl(data?.client?.name, data?.client?.id)
       : !data?.id ? firstFormView : formTmp}
   </CustomThemeWrapper>;
 }

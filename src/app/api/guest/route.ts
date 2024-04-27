@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const clientId: string | null = request.nextUrl.searchParams.get('clientId');
   const {name, email, extraPerson1} = await request.json();
-  console.log(clientId, name);
+  console.log(clientId, name, email);
 
   const isExistGuest: any | null = db.guest.findFirst({where: {email}});
 

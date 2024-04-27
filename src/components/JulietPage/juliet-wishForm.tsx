@@ -45,13 +45,12 @@ export default function JulietWishForm({data}: any) {
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
-    {/*{form.getFieldValue('text')?.trim()?.length}*/}
+
     <Form.Item>
       <Button type="primary"
               htmlType="submit"
               className={styles.fullWButton}
-              onClick={sendWish}
-              disabled={!form.getFieldValue('text')?.trim()?.length}>
+              onClick={sendWish}>
         Send Wish
       </Button>
     </Form.Item>
@@ -60,9 +59,9 @@ export default function JulietWishForm({data}: any) {
   return <CustomThemeWrapper>
     {
       isSentWish
-        ? <h2 className={styles.heading}>Thanks for your time</h2>
+        ? <div className={styles.notification}>Thank you; your wish has been sent.</div>
         : <>
-          <h2 style={{textAlign: 'center'}}>Leave good wish for {data?.name}</h2>
+          <h2 style={{textAlign: 'center'}}>Leave your wish for {data?.name}</h2>
           {WishForm}
         </>
     }

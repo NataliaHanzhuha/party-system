@@ -1,5 +1,5 @@
 'use client';
-import { Button, Table, Typography } from 'antd';
+import { Divider, Table, Typography, Tag } from 'antd';
 import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
@@ -32,25 +32,33 @@ export default function ClientData({params}: PostsEditProps) {
       Client: {data ? data?.name : params.id}
     </Title>
     Guests: {data?.guests?.length ?? 0}
+    <Divider type="vertical" />
+    <Link href={`../../${data?.id}/wishes`}> Add Wish link</Link>
+    <Divider type="vertical" />
+    <Link href={`../../${data?.id}/wishes/list`}>Wish list link</Link>
 
     <Table dataSource={data?.guests}>
       <Table.Column title="Name"
                     key="name"
                     dataIndex="name"/>
-      <Table.Column title="Status"
-                    key="status"
-                    dataIndex="status"/>
       <Table.Column title="Email"
                     key="email"
                     dataIndex="email"/>
-      <Table.Column title={() => <>
-                      Action
-                      <Link href={`../../${data?.id}/invitation`}>Add guest link</Link>
-                    </>}
+      <Table.Column title="Status"
+                    key="status"
+                    render={(value: string) => {
+                      const arr = ['NEW', 'EDITED', 'REJECTED'];
+                      const colors = ['blue', 'purple', 'volcano'];
+
+                      return <Tag color={colors[arr.indexOf(value)]}>{value}</Tag>
+                    }}
+                    dataIndex="status"/>
+      <Table.Column title={() => <Link href={`../../${data?.id}/invitation`}>Add guest link</Link>}
                     dataIndex=""
                     key="x"
                     render={(value: Guest) => <>
                       <Link href={`../../${data?.id}/invitation/${value?.id}`}>Edit</Link>
+                      <Divider type="vertical" />
                       <Link href={`../../${data?.id}/cancel/${value?.id}`}>Cancel</Link>
 
                     </>}/>

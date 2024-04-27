@@ -5,7 +5,8 @@
   padding: 10px;
   border: 1px solid #284b63;
   margin: 10px;
-  max-width: 300px;
+  min-width: 300px;
+  max-width: 600px;
   border-radius: 20px;
   background-color: #d9d9d9;
 }
@@ -30,13 +31,15 @@
   font-style: italic;
 }
 
-.commentWrapper {
+.page {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow-y: auto;
+  align-items: center;
 }
 
-.commentWrapper h2 {
+.page h2 {
   color: #3c6e71;
+
 }
