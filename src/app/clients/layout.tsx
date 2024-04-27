@@ -1,6 +1,6 @@
 'use client'
-import { redirect } from 'next/navigation';
-import { auth } from '../api/auth/[...nextauth]/auth';
+// import { redirect } from 'next/navigation';
+// import { auth } from '../api/auth/[...nextauth]/auth';
 import { Breadcrumb, Layout } from 'antd';
 
 // const { Header, Content, Footer } = Layout;
