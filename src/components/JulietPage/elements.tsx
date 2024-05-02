@@ -60,12 +60,11 @@ export const finalTmpl = (name: string, id: string) => <div style={{alignSelf: '
   <p>More details have been sent to your email provided</p>
 </div>;
 
-export const firstFormReject = (name: string, id: string) => <div>
-  <h2 className={styles.heading}>Thank you for your time;
+export const firstFormReject = (name: string, id: string) => <div className={styles.notification}>
+  Thank you for your time;
   <span> to leave a wish for {name}, click
     <Link className={styles.link}
           href={`../../${id}/wishes`}> HERE</Link></span>
-</h2>
 </div>;
 
 export const firstForm = (
@@ -90,3 +89,5 @@ export const firstForm = (
             onClick={cancel}>No</Button>
   </Flex>
 </div>;
+
+export const positiveCancelAnswer = <div className={styles.notification}>Your Reservation is now cancelled.</div>;

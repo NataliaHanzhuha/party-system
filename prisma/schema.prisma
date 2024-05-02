@@ -1,46 +1,43 @@
 generator client {
   provider = "prisma-client-js"
+  seed    = "prisma/seed.ts"
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Client {
-  id                String             @id @default(cuid())
-  name              String
-  email             String
-  invitationEmailId String?
-  guests            Guest[]
-  wishes            Wish[]
-  invitationPage    InvitationPageEnum? @default(JULIETPAGE)
+  id                     String                @id @default(cuid())
+  name                   String
+  email                  String
+  invitationPage         InvitationPageEnum?   @default(DEFAULT)
+  invitationEmailId      String?
+  EmailTemplateDetailsId Int?
+  EmailTemplateDetails   EmailTemplateDetails? @relation(fields: [EmailTemplateDetailsId], references: [id])
+  guests                 Guest[]
+  wishes                 Wish[]
 }
 
-enum InvitationPageEnum {
-  DEFAULT
-  JULIETPAGE
+model EmailTemplateDetails {
+  id                Int      @id @default(autoincrement())
+  mediaEmailId      String?
+  invitationEmailId String?
+  Client            Client[]
 }
 
 model Guest {
   id           String      @id @default(cuid())
   name         String
-  email        String
   createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  client       Client?     @relation(fields: [clientId], references: [id])
+  updatedAt    DateTime    @updatedAt @ignore
   clientId     String?
   extraPerson1 String?
   status       GuestStatus @default(NEW)
-
-  @@unique([email])
-}
-
-enum GuestStatus {
-  NEW
-  EDITED
-  REJECTED
+  email        String
+  client       Client?     @relation(fields: [clientId], references: [id])
 }
 
 model Wish {
@@ -48,15 +45,24 @@ model Wish {
   createdAt DateTime @default(now())
   text      String
   name      String
-  client    Client?  @relation(fields: [clientId], references: [id])
   clientId  String?
+  client    Client?  @relation(fields: [clientId], references: [id])
 }
 
 model Admin {
   id    String  @id @default(cuid())
-  email String
+  email String  @unique
   name  String
   hash  String?
+}
 
-  @@unique([email])
+enum InvitationPageEnum {
+  DEFAULT
+  JULIETPAGE
+}
+
+enum GuestStatus {
+  NEW
+  EDITED
+  REJECTED
 }

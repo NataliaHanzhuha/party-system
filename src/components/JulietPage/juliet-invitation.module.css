@@ -116,13 +116,17 @@
 @media screen and (min-width: 1024px) {
   .page {
     background-image: url("../images/laptop-bg.png");
-    padding-top: 25vh;
+    padding-top: 7vh;
     padding-left: 12vh;
   }
 
   .formWrapper {
     height: 400px;
     width: 80%;
+  }
+
+  .notification {
+    font-size: 24px;
   }
 
   /*.firstFormWrapper button {*/

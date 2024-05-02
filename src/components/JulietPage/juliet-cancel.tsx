@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, firstForm } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper, firstForm, positiveCancelAnswer } from '@/components/JulietPage/elements';
 import styles from './juliet-invitation.module.css';
 
 export default function JulietCancelInvitation({data}: any) {
@@ -17,8 +17,8 @@ export default function JulietCancelInvitation({data}: any) {
   const firstFormView = agreedForRSVP === null
     ? firstForm(message, () => cancelGuest(data), () => isAgreed(false))
     : agreedForRSVP
-      ? <div className={styles.notification}>Your Reservation is now cancelled.</div>
+      ? positiveCancelAnswer
       : <div className={styles.notification}>Thank you for your Confirmation; your Reservation will remain.</div>;
 
-  return <CustomThemeWrapper>{firstFormView}</CustomThemeWrapper>;
+  return <CustomThemeWrapper>{data?.status === 'REJECTED' ? positiveCancelAnswer : firstFormView}</CustomThemeWrapper>;
 }

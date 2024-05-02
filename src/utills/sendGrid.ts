@@ -27,18 +27,18 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
 
 export const sendNewGuestEvent = async (client: Client, guest: Guest) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
-  console.log(client.name, guest.name);
+  const url = process.env.NEXTAUTH_URL;
   const msg: MailDataRequired = {
     subject: `Thanks for accepting ${client.name} party invitation`,
-    templateId: client.invitationEmailId!,
+    templateId: 'd-b914ec82275540e28d3bdffa31a0ae5d',
     from: 'nataliiahanzhuha@gmail.com',
     personalizations: [{
       to: {email: guest.email},
       dynamicTemplateData: {
         guestName: guest.name,
         clientName: client.name,
-        weblink_edited: `https://party-system-rsvp.vercel.app/${guest?.clientId}/invitation/${guest.id}`,
-        weblink_reject: `https://party-system-rsvp.vercel.app/${guest?.clientId}/cancel/${guest.id}`
+        weblink_edited: `${url}${guest?.clientId}/invitation/${guest.id}`,
+        weblink_reject: `${url}${guest?.clientId}/cancel/${guest.id}`
       }
     }]
   };

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './juliet-invitation.module.css';
 import axios from 'axios';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject, positiveCancelAnswer } from '@/components/JulietPage/elements';
 
 interface SubmitButtonProps {
   form: FormInstance;
@@ -80,7 +80,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
     </Form.Item>
     <Form.Item name="extraPerson1"
                className={styles.label}
-               label="Extra person Name">
+               label="Second Person Name">
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
@@ -94,7 +94,6 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
 };
 
 export default function JulietInvitation({data}: any) {
-  const [form] = Form.useForm();
   const initialValue = {
     name: data?.name ?? '',
     email: data?.email ?? '',
@@ -102,6 +101,8 @@ export default function JulietInvitation({data}: any) {
     clientId: data?.client?.id,
     id: data?.id ?? null
   };
+  const [form] = Form.useForm();
+
   const [agreedForRSVP, isAgreed] = useState<boolean | null>(null);
   const [isSavedGuest, setSavedGuest] = useState<Guest | null>(null);
   const title = `${data?.client?.name}'s 50th birthday party (28.09.2024)`;
@@ -121,9 +122,11 @@ export default function JulietInvitation({data}: any) {
       ? formTmp
       : firstFormReject(data?.client?.name, data?.client?.id);
 
-  return <CustomThemeWrapper>
-    {isSavedGuest
+  const view = data?.status === 'REJECTED'
+    ? positiveCancelAnswer
+    : isSavedGuest
       ? finalTmpl(data?.client?.name, data?.client?.id)
-      : !data?.id ? firstFormView : formTmp}
-  </CustomThemeWrapper>;
+      : !data?.id ? firstFormView : formTmp;
+
+  return <CustomThemeWrapper>{view}</CustomThemeWrapper>;
 }

@@ -3,10 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "dotenv -e .env next dev",
+    "prod": "dotenv -e .env.development.local next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "studio:prod": "dotenv -e .env.development.local prisma studio",
+    "gen:prod": "dotenv -e .env.development.local prisma generate",
+    "studio:dev": "dotenv -e .env prisma studio",
+    "gen:dev": "dotenv -e .env prisma generate",
+    "reset:prod": "dotenv -e .env.development.local prisma reset",
+    "lint": "next lint",
+    "data-migration:add-status-column": "ts-node ./prisma/migrations/20240429191004_test/data-migration.ts"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
@@ -28,13 +38,15 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/next-auth": "^3.15.0",
-    "@types/node": "^20",
+    "@types/node": "^20.12.7",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "prisma": "^5.13.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5.4.5"
   }
 }
