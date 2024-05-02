@@ -31,6 +31,15 @@
   padding-bottom: 50px;
 }
 
+.label label {
+  font-weight: 700;
+}
+
+.formItem {
+  display: flex;
+  justify-content: center;
+}
+
 .formWrapper {
   background-color: rgb(255 255 255 / 50%);
   border-radius: 10px;
@@ -82,7 +91,7 @@
 }
 
 .fullWButton {
-  width: 100%;
+  width: 80%;
   display: block;
   border-color: #000 !important;
 }

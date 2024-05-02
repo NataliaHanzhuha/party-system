@@ -25,13 +25,15 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({for
   }, [form, values]);
 
   return (
-    <Button type="primary"
-            htmlType="submit"
-            className={styles.fullWButton}
-            onClick={() => saved()}
-            disabled={!submittable}>
-      {children}
-    </Button>
+    <div className={styles.formItem}>
+      <Button type="primary"
+              htmlType="submit"
+              className={styles.fullWButton}
+              onClick={() => saved()}
+              disabled={!submittable}>
+        {children}
+      </Button>
+    </div>
   );
 };
 
@@ -71,6 +73,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
+
     <Form.Item name="email"
                className={styles.label}
                label="Email"
@@ -78,12 +81,14 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <Input type="email"
              className={styles.field}/>
     </Form.Item>
+
     <Form.Item name="extraPerson1"
                className={styles.label}
-               label="Second Person Name">
+               label="Name of your additional Guest">
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
+
     <Form.Item>
       <SubmitButton form={form}
                     saved={submit}>RSVP</SubmitButton>

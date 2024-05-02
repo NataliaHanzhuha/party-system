@@ -3,9 +3,9 @@ import { Button, Form, Input } from 'antd';
 import styles from '@/components/JulietPage/juliet-invitation.module.css';
 import { Wish } from '@prisma/client';
 import axios from 'axios';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
-export default function JulietWishForm({data}: any) {
+export default function JulietWishForm({data}: any): ReactNode {
   const [isSentWish, sent] = useState<Wish | null>(null);
 
   const [form] = Form.useForm();
@@ -47,16 +47,19 @@ export default function JulietWishForm({data}: any) {
     </Form.Item>
 
     <Form.Item>
-      <Button type="primary"
-              htmlType="submit"
-              className={styles.fullWButton}
-              onClick={sendWish}>
-        Send Wish
-      </Button>
+      <div className={styles.formItem}>
+        <Button type="primary"
+                htmlType="submit"
+                className={styles.fullWButton}
+                onClick={sendWish}>
+          Send Wish
+        </Button>
+      </div>
     </Form.Item>
-  </Form>;
+  </Form>
+;
 
-  return <CustomThemeWrapper>
+return<CustomThemeWrapper>
     {
       isSentWish
         ? <div className={styles.notification}>Thank you; your wish has been sent.</div>
@@ -65,6 +68,5 @@ export default function JulietWishForm({data}: any) {
           {WishForm}
         </>
     }
-
   </CustomThemeWrapper>;
 }
