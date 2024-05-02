@@ -36,7 +36,6 @@ export const options: NextAuthOptions = {
         },
       },
       authorize: async function(credentials) {
-        console.log(credentials);
         try {
           const {email, password} = credentials as {
             email: string
@@ -53,7 +52,7 @@ export const options: NextAuthOptions = {
           }
 
           const checkPassword = await isSamePass(password, user.hash)
-          console.log(user, checkPassword, pwHash);
+          console.log(user, pwHash, user.hash);
           if (!checkPassword) {
             // throw new Error("Wrong password.")
             return null;

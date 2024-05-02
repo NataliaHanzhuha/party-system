@@ -1,6 +1,6 @@
 import { CustomThemeWrapper } from '@/src/components/JulietPage/elements';
 import { Button, Form, Input } from 'antd';
-import styles from '@/components/JulietPage/juliet-invitation.module.css';
+import styles from '@/src/components/JulietPage/juliet-invitation.module.css';
 import { Wish } from '@prisma/client';
 import axios from 'axios';
 import { ReactNode, useState } from 'react';

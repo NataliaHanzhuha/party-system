@@ -1,4 +1,4 @@
-import styles from '@/components/JulietPage/juliet-invitation.module.css';
+import styles from '@/src/components/JulietPage/juliet-invitation.module.css';
 import { Button, ConfigProvider, Flex } from 'antd';
 import Link from 'next/link';
 

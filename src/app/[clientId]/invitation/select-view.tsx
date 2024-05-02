@@ -1,5 +1,6 @@
 import JulietInvitation from '@/src/components/JulietPage/juliet-invitation';
 import DefaultInvitation from '@/src/components/default-form';
+import { PageView } from '@/types/types';
 
 export default function selectComponent(
   clientId: string,
@@ -18,7 +19,7 @@ export default function selectComponent(
 
 
   switch (invitationPage) {
-    case 'JULIETPAGE' : {
+    case PageView[PageView.JULIETPAGE] : {
       return <JulietInvitation data={getComponentData}/>;
     }
     default: {

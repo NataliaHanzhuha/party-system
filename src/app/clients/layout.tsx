@@ -6,14 +6,14 @@ import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 export default async function ClientLayout({children}: { children: React.ReactNode }) {
-  const { data: session, status } = useSession()
-
-  console.log(session);
+  // const session = await getServerSession(options)
+  //
+  // console.log('ClientLayout', session);
   // if (!session) {
   //  redirect('/')
   // }
 
-  return <AdminProvider session={session}>
+  return <AdminProvider session={null}>
     <Dashboard>{children}</Dashboard>
   </AdminProvider>;
 }

@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FormProps, useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
+import { redirect, useRouter } from 'next/navigation';
 import { Button, Form, Input } from 'antd';
 
 const formSchema = z.object({
@@ -25,12 +25,11 @@ const defaultValues: Login = {
   password: '',
 }
 
-export default function LoginForm() {
+export default function LoginForm(update: () => void): JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-
   const router = useRouter();
-
+  // const { data: session, update } = useSession();
   const form = useForm<Login>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -51,6 +50,7 @@ export default function LoginForm() {
       setError(res?.error);
       setIsLoading(false);
     } else {
+      await update({...res});
       router.push('/clients');
     }
   };
