@@ -35,7 +35,7 @@
   font-weight: 700;
 }
 
-.formItem .ant-form-item-control-input-content {
+.formItem {
   display: flex;
   justify-content: center;
 }

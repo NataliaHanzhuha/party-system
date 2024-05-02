@@ -25,13 +25,15 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({for
   }, [form, values]);
 
   return (
-    <Button type="primary"
-            htmlType="submit"
-            className={styles.fullWButton}
-            onClick={() => saved()}
-            disabled={!submittable}>
-      {children}
-    </Button>
+    <div className={styles.formItem}>
+      <Button type="primary"
+              htmlType="submit"
+              className={styles.fullWButton}
+              onClick={() => saved()}
+              disabled={!submittable}>
+        {children}
+      </Button>
+    </div>
   );
 };
 
@@ -87,7 +89,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
              className={styles.field}/>
     </Form.Item>
 
-    <Form.Item className={styles.formItem}>
+    <Form.Item>
       <SubmitButton form={form}
                     saved={submit}>RSVP</SubmitButton>
     </Form.Item>
