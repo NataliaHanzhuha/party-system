@@ -4,6 +4,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import selectComponent from '@/app/[clientId]/invitation/select-view';
 import Loading from '@/components/loading';
+// import { Metadata } from 'next';
 
 export default function ClientData({params}: any) {
   const {clientId} = params;
