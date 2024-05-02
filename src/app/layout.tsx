@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     description: 'Here all friends of Juliet could leave their data for party invitation',
-    images: `${process.env.NEXTAUTH_URL}/app/juliet-photo.png`,
+    images: `./juliet-photo.png`,
     locale: 'en_US',
     type: 'website',
     siteName: 'Juliet RSVP'
