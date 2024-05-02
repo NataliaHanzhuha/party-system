@@ -71,6 +71,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
+
     <Form.Item name="email"
                className={styles.label}
                label="Email"
@@ -78,13 +79,15 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
       <Input type="email"
              className={styles.field}/>
     </Form.Item>
+
     <Form.Item name="extraPerson1"
                className={styles.label}
                label="Name of your additional Guest">
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
-    <Form.Item>
+
+    <Form.Item className={styles.formItem}>
       <SubmitButton form={form}
                     saved={submit}>RSVP</SubmitButton>
     </Form.Item>
