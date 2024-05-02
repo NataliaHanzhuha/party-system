@@ -1,5 +1,5 @@
-import DefaultInvitation from '@/components/default-form';
-import JulietCancelInvitation from '@/components/JulietPage/juliet-cancel';
+import DefaultInvitation from '@/src/components/default-form';
+import JulietCancelInvitation from '@/src/components/JulietPage/juliet-cancel';
 
 export default function selectComponent(data: any) {
   switch (data?.client?.invitationPage) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
+import { db } from '@/src/db';
 
 export async function POST(request: NextRequest) {
   const clientId: string | null = request.nextUrl.searchParams.get('clientId');

@@ -1,6 +1,4 @@
 'use client'
-import axios from 'axios';
-import useSWR from 'swr';
 
 export default function DefaultInvitation({data}: any) {
   console.log(data);

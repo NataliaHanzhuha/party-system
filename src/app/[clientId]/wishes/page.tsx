@@ -1,9 +1,9 @@
-'use client'
-import Link from 'next/link';
+'use client';
+
 import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/components/loading';
-import selectComponent from '@/app/[clientId]/wishes/select-view';
+import Loading from '@/src/components/loading';
+import selectComponent from '@/src/app/[clientId]/wishes/select-view';
 
 export default function WishForm({params}: any) {
   const {clientId} = params;
@@ -11,7 +11,7 @@ export default function WishForm({params}: any) {
   const {data, error, isLoading} = useSWR('/api/client?id=' + clientId, fetcher);
 
   if (isLoading) {
-    return  <Loading />;
+    return <Loading/>;
   }
 
   if (!data?.id) {

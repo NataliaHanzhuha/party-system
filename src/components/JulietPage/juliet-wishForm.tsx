@@ -1,4 +1,4 @@
-import { CustomThemeWrapper } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper } from '@/src/components/JulietPage/elements';
 import { Button, Form, Input } from 'antd';
 import styles from '@/components/JulietPage/juliet-invitation.module.css';
 import { Wish } from '@prisma/client';

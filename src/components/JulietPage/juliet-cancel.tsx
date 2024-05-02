@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, firstForm, positiveCancelAnswer } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper, firstForm, positiveCancelAnswer } from '@/src/components/JulietPage/elements';
 import styles from './juliet-invitation.module.css';
 
 export default function JulietCancelInvitation({data}: any) {

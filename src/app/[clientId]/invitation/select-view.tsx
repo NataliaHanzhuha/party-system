@@ -1,5 +1,5 @@
-import JulietInvitation from '@/components/JulietPage/juliet-invitation';
-import DefaultInvitation from '@/components/default-form';
+import JulietInvitation from '@/src/components/JulietPage/juliet-invitation';
+import DefaultInvitation from '@/src/components/default-form';
 
 export default function selectComponent(
   clientId: string,

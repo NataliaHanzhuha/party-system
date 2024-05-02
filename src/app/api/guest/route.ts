@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { Client, Guest } from '@prisma/client';
-import { sendNewGuestEvent } from '@/utills/sendGrid';
+import { db } from '@/src/db';
+import { Guest } from '@prisma/client';
+import { sendNewGuestEvent } from '@/src/utills/sendGrid';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');
@@ -67,7 +67,7 @@ export async function PUT(request: NextRequest) {
   console.log('put guest');
   const guest = await db.guest.update({
     where: {id, clientId},
-    data: { status: 'REJECTED'},
+    data: {status: 'REJECTED'},
   });
   return NextResponse.json(guest);
 }

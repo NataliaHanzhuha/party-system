@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './juliet-invitation.module.css';
 import axios from 'axios';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject, positiveCancelAnswer } from '@/components/JulietPage/elements';
+import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject, positiveCancelAnswer } from '@/src/components/JulietPage/elements';
 
 interface SubmitButtonProps {
   form: FormInstance;

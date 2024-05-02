@@ -1,10 +1,10 @@
 import sgMail from '@sendgrid/mail';
 import fs from 'fs';
 import path from 'path';
-import { deleteExcelFile } from '@/utills/excel-processing';
 import { NextResponse } from 'next/server';
 import { Client, Guest } from '@prisma/client';
 import { MailDataRequired } from '@sendgrid/helpers/classes/mail';
+import { deleteExcelFile } from '@/src/utills/excel-processing';
 
 export const sendManyEmails = async (emails: any, templateId: string) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
@@ -94,7 +94,7 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
   return sgMail.send(msg)
     .then(() => {
       console.log('Email sent');
-      // deleteExcelFile(link1);
+      deleteExcelFile(link1);
       return NextResponse.json({
         message: 'Email sent to ' + client.email + '; from: nataliiahanzhuha@gmail.com'});
     })

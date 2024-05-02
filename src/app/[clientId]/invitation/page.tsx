@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import selectComponent from '@/app/[clientId]/invitation/select-view';
-import Loading from '@/components/loading';
+import selectComponent from '@/src/app/[clientId]/invitation/select-view';
+import Loading from '@/src/components/loading';
 
 export default function ClientData({params}: any) {
   const {clientId} = params;

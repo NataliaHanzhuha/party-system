@@ -2,11 +2,8 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import JulietInvitation from '@/components/JulietPage/juliet-invitation';
-import DefaultInvitation from '@/components/default-form';
-import { Guest } from '@prisma/client';
-import selectComponent from '@/app/[clientId]/invitation/select-view';
-import Loading from '@/components/loading';
+import selectComponent from '@/src/app/[clientId]/invitation/select-view';
+import Loading from '@/src/components/loading';
 
 export default function InvitationUpdate({params}: any) {
   const {clientId, guestId} = params;
@@ -14,7 +11,7 @@ export default function InvitationUpdate({params}: any) {
   const {data, error, isLoading} = useSWR('/api/guest?id=' + guestId + '&clientId=' + clientId, fetcher);
 
   if (isLoading) {
-    return  <Loading />;
+    return <Loading/>;
   }
 
   if (!data?.id) {
@@ -22,5 +19,5 @@ export default function InvitationUpdate({params}: any) {
   }
 
 
-return selectComponent(clientId, data, guestId);
+  return selectComponent(clientId, data, guestId);
 }

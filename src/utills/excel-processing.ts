@@ -9,7 +9,7 @@ export const excelDoc = (arr: Guest[], client: Client) => {
   worksheet.columns = [
     {header: '#', key: 'index', width: 5},
     {header: 'Guest name', key: 'name', width: 25},
-    {header: 'Extra person', key: 'extraPerson1', width: 25},
+    {header: 'Second person', key: 'extraPerson1', width: 25},
     {header: 'Status', key: 'status', width: 10},
   ];
 

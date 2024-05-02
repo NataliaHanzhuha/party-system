@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/components/loading';
+import Loading from '@/src/components/loading';
 import { Wish } from '@prisma/client';
 import styles from './wishList.module.css';
 

@@ -1,8 +1,8 @@
 import NextAuth, { Session } from 'next-auth';
 import Credentials from "next-auth/providers/credentials"
 // Your own logic for dealing with plaintext password strings; be careful!
-import { db } from '@/db';
-import { isSamePass, saltAndHashPassword } from '@/utills/password';
+import { db } from '@/src/db';
+import { isSamePass, saltAndHashPassword } from '@/src/utills/password';
 import prisma from '../../lib/prisma';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

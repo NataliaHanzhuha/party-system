@@ -1,8 +1,8 @@
 'use client';
 import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '../../../../components/loading';
-import selectComponent from '@/app/[clientId]/cancel/select-view';
+import selectComponent from '@/src/app/[clientId]/cancel/select-view';
+import Loading from '@/src/components/loading';
 
 export default function DefaultInvitation({params}: any) {
   const {clientId, guestId} = params;

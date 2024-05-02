@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { excelDoc } from '@/utills/excel-processing';
-import { sendEmailWithGuestsList } from '@/utills/sendGrid';
+import { db } from '@/src/db';
+import { excelDoc } from '@/src/utills/excel-processing';
+import { sendEmailWithGuestsList } from '@/src/utills/sendGrid';
 
 export async function GET(request: NextRequest) {
   const id: string = request.nextUrl.searchParams.get('id')!;

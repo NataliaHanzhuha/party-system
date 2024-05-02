@@ -4,7 +4,6 @@ import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Guest } from '@prisma/client';
-import { sendNewGuestEvent } from '@/utills/sendGrid';
 
 interface PostsEditProps {
   params: {
