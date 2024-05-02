@@ -31,6 +31,10 @@
   padding-bottom: 50px;
 }
 
+.label label {
+  font-weight: 700;
+}
+
 .formWrapper {
   background-color: rgb(255 255 255 / 50%);
   border-radius: 10px;

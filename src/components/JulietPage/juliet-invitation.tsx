@@ -80,7 +80,7 @@ const InvitationForm: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({f
     </Form.Item>
     <Form.Item name="extraPerson1"
                className={styles.label}
-               label="Second Person Name">
+               label="Name of your additional Guest">
       <Input type="text"
              className={styles.field}/>
     </Form.Item>
