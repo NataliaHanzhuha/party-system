@@ -1,5 +1,4 @@
-import { Client, Guest } from '@prisma/client';
-import JulietInvitation from '@/components/JulietPage/juliet-invitation';
+import { Client } from '@prisma/client';
 import DefaultInvitation from '@/components/default-form';
 import JulietWishForm from '@/components/JulietPage/juliet-wishForm';
 
