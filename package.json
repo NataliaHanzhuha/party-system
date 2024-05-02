@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "dotenv -e .env next dev",
     "prod": "dotenv -e .env.development.local next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "studio:prod": "dotenv -e .env.development.local prisma studio",
     "gen:prod": "dotenv -e .env.development.local prisma generate",
