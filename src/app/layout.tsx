@@ -5,7 +5,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Juliet Party",
+  title: "Juliet Party RSVP",
   description: "RSVP site for Juliet Party Guests",
   icons: {
     icon: '/favicon.ico',
