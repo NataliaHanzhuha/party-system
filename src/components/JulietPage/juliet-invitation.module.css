@@ -1,5 +1,5 @@
 .page {
-  background-image: url("../images/juliet-bg.png");
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/dad-birthday-party.appspot.com/o/party-system%2Fjuliet-bg.png?alt=media&token=7f106741-b184-48e5-9dce-c2df0feb7341");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,7 +98,7 @@
 
 @media screen and (min-width: 768px) {
   .page {
-    background-image: url("../images/tablet-bg.png");
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/dad-birthday-party.appspot.com/o/party-system%2Ftablet-bg.png?alt=media&token=9ae1c7e5-410f-483b-ba27-d35f48a89262");
     justify-content: flex-start;
     padding-left: 50px;
     align-items: center;
@@ -119,12 +119,13 @@
     font-size: 24px;
     padding: 0 15px;
     width: 24vw;
+    max-width: 200px;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .page {
-    background-image: url("../images/laptop-bg.png");
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/dad-birthday-party.appspot.com/o/party-system%2Flaptop-bg.png?alt=media&token=3ac0ca0a-e164-464b-b61e-1cf3820e783c");
     padding-top: 7vh;
     padding-left: 12vh;
   }
