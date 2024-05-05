@@ -1,15 +1,22 @@
-'use client';
+// 'use client';
 
-import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
 import LoginForm from '@/src/app/login/page';
+import { getServerSession } from 'next-auth/next';
+import { options } from '@/lib/auth/options';
+import { redirect } from 'next/navigation';
+import { auth } from './api/auth/[...nextauth]/route';
 
-export default function Page() {
-  // useEffect(() => {
-  //   redirect('/clients');
-  // })
+export default async function Page({}) {
+  // const session = await getServerSession(options);
+
+  // console.log(session);
+  // if (session) {
+  //   redirect('clients');
+  // } else {
+  //   redirect('/login')
+  // }
 
   return <main>
-    <LoginForm />
+    {/*<LoginForm />*/}
   </main>;
 }

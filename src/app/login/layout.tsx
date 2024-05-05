@@ -1,18 +1,22 @@
-import { SessionProvider, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import LoginForm from '@/src/app/login/page';
+'use client';
+
+import { SessionProvider } from 'next-auth/react';
+import { Card, Flex, Typography } from 'antd';
 
 export default function LoginLayout({children}: any) {
-  const { data: session, update } = useSession();
+  return <SessionProvider session={children.session}>
+    <Flex gap="middle"
+          style={{height: '100vh'}}
+          align="center"
+          justify="center"
+          vertical>
+      <Card style={{minWidth: 400}}>
+        <Typography.Title level={2}
+                          style={{textAlign:'center'}}
+                          type="secondary">Login Page</Typography.Title>
+        {children}
+      </Card>
+    </Flex>
+  </SessionProvider>;
 
-  console.log(session);
-  if (session) {
-    redirect('/clients');
-  }
-
-  return <SessionProvider>
-    <LoginForm update={(res: any) => {
-      console.log('layout', res);
-      update(res)}}/>
-  </SessionProvider>
 }

@@ -10,12 +10,13 @@ import { isSamePass, saltAndHashPassword } from '@/src/utills/password';
 import { randomBytes, randomUUID } from 'node:crypto';
 
 const userParams = (user: UserSession): UserParams => {
+  console.log(user);
   return {
     id: user.id,
     email: user.email,
     first_name: user.first_name,
     last_name: user.last_name,
-    name: `${user.first_name} ${user.last_name}`,
+    name: `${user.first_name} ${!!user?.last_name ? user?.last_name : ""}`.trim(),
   };
 };
 
@@ -58,7 +59,12 @@ export const options: NextAuthOptions = {
             return null;
           }
 
-          return user;
+          console.log(user);
+          return {
+            id: user.id,
+            first_name: user.name,
+            email: user.email
+          } as any
         } catch (error: any) {
           handleError(error);
           console.error(error);
@@ -76,6 +82,9 @@ export const options: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async signIn(params): Promise<any> {
+      return params;
+    },
     async jwt({token, account, user, trigger, session}): Promise<JWT> {
       if (trigger === 'update' && !session?.tokenIsRefreshed) {
         token.access_token = session.access_token;
@@ -114,8 +123,9 @@ export const options: NextAuthOptions = {
       }
     },
     async session({session, token}): Promise<Session> {
-      console.log('session', session);
+      console.log('session', session, token);
       if (token.error) {
+        session.user = token.user as any;
         session.error = token.error;
         session.expires = new Date(
           new Date().setDate(new Date().getDate() - 1)

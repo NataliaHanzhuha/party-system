@@ -3,8 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FormProps, useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
 import { Button, Form, Input } from 'antd';
 
@@ -25,11 +25,18 @@ const defaultValues: Login = {
   password: '',
 }
 
-export default function LoginForm(update: () => void): JSX.Element {
+export default function LoginForm(): JSX.Element {
+  const { data: session, update } = useSession();
+
+  useEffect(() => {
+    if (session?.user) {
+      redirect('/clients');
+    }
+  }, [session?.user])
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const router = useRouter();
-  // const { data: session, update } = useSession();
   const form = useForm<Login>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -50,7 +57,8 @@ export default function LoginForm(update: () => void): JSX.Element {
       setError(res?.error);
       setIsLoading(false);
     } else {
-      await update({...res});
+      console.log(res);
+      await update({...values});
       router.push('/clients');
     }
   };
@@ -61,6 +69,7 @@ export default function LoginForm(update: () => void): JSX.Element {
   };
 
   return (
+
     <Form
       name="basic"
       {...form}
@@ -94,64 +103,9 @@ export default function LoginForm(update: () => void): JSX.Element {
         <Button type="primary"
                 loading={isLoading}
                 htmlType="submit">
-          Submit
+          Sign In
         </Button>
       </Form.Item>
     </Form>
-    // <Form {...form}>
-    //   <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
-    //     <div className="grid gap-1">
-    //       <FormField
-    //         control={form.control}
-    //         name="email"
-    //         render={({ field }) => (
-    //           <FormItem>
-    //             <FormLabel>Email</FormLabel>
-    //             <FormControl>
-    //               <Input
-    //                 type="email"
-    //                 placeholder="name@example.com"
-    //                 {...field}
-    //               />
-    //             </FormControl>
-    //             <FormDescription className="text-xs italic">
-    //               Enter your email.
-    //             </FormDescription>
-    //             <FormMessage />
-    //           </FormItem>
-    //         )}
-    //       />
-    //     </div>
-    //     <div className="grid gap-1">
-    //       <FormField
-    //         control={form.control}
-    //         name="password"
-    //         render={({ field }) => (
-    //           <FormItem>
-    //             <FormLabel>Password</FormLabel>
-    //             <FormControl>
-    //               <Input type="password" placeholder="*******" {...field} />
-    //             </FormControl>
-    //             <FormDescription className="text-xs italic">
-    //               Enter your password.
-    //             </FormDescription>
-    //             <FormMessage />
-    //           </FormItem>
-    //         )}
-    //       />
-    //     </div>
-    //
-    //     {error && (
-    //       <Alert variant="destructive">
-    //         <AlertCircle className="h-4 w-4" />
-    //         <AlertDescription>{error}</AlertDescription>
-    //       </Alert>
-    //     )}
-    //
-    //     <Button disabled={isLoading} type="submit">
-    //       {isLoading && <Spinner />} Login
-    //     </Button>
-    //   </form>
-    // </Form>
   );
 }

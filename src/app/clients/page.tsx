@@ -4,9 +4,22 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { Avatar, Card, Empty, Space, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { getServerSession } from 'next-auth/next';
+import { options } from '@/lib/auth/options';
+import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 
 export default function ClientList() {
+  const session = useSession();
+  console.log('clientList', session);
+  useEffect(() => {
+    if (session?.status === 'unauthenticated') {
+      redirect('/login');
+    }
+
+  }, [session])
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
   const {data, error, isLoading} = useSWR('/api/client', fetcher);
 
