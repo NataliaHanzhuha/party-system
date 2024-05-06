@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, Layout, Dropdown } from 'antd';
-import { signOut, useSession } from 'next-auth/react';
+import { SessionProvider, signOut, useSession } from 'next-auth/react';
 import type { MenuProps } from 'antd';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
@@ -25,6 +25,7 @@ export default function Dashboard({children}: any) {
     }
   ];
   return (
+    <SessionProvider session={children.session}>
     <Layout style={{minHeight: '100vh'}}>
       <Layout.Header style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         <div className="demo-logo"/>
@@ -42,5 +43,6 @@ export default function Dashboard({children}: any) {
         Ant Design ©{new Date().getFullYear()} Created by Ant UED
       </Layout.Footer>
     </Layout>
+    </SessionProvider>
   );
 }

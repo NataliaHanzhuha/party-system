@@ -14,7 +14,7 @@ model Client {
   name                   String
   email                  String
   invitationPage         InvitationPageEnum?   @default(DEFAULT)
-  invitationEmailId      String?
+  invitationEmailId      String? @ignore
   EmailTemplateDetailsId Int?
   EmailTemplateDetails   EmailTemplateDetails? @relation(fields: [EmailTemplateDetailsId], references: [id])
   guests                 Guest[]

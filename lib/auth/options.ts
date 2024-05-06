@@ -10,7 +10,6 @@ import { isSamePass, saltAndHashPassword } from '@/src/utills/password';
 import { randomBytes, randomUUID } from 'node:crypto';
 
 const userParams = (user: UserSession): UserParams => {
-  console.log(user);
   return {
     id: user.id,
     email: user.email,
@@ -53,13 +52,12 @@ export const options: NextAuthOptions = {
           }
 
           const checkPassword = await isSamePass(password, user.hash)
-          console.log(user, pwHash, user.hash);
+
           if (!checkPassword) {
             // throw new Error("Wrong password.")
             return null;
           }
 
-          console.log(user);
           return {
             id: user.id,
             first_name: user.name,
@@ -67,7 +65,6 @@ export const options: NextAuthOptions = {
           } as any
         } catch (error: any) {
           handleError(error);
-          console.error(error);
           return null;
         }
       },
@@ -123,7 +120,6 @@ export const options: NextAuthOptions = {
       }
     },
     async session({session, token}): Promise<Session> {
-      console.log('session', session, token);
       if (token.error) {
         session.user = token.user as any;
         session.error = token.error;

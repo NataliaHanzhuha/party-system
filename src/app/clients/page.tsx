@@ -9,25 +9,29 @@ import { options } from '@/lib/auth/options';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-
+import { NextSeo } from 'next-seo';
 
 export default function ClientList() {
   const session = useSession();
-  console.log('clientList', session);
+  const fetcher = (url: string) => axios.get(url).then(res => res.data);
+  const {data, error, isLoading} = useSWR('/api/client', fetcher);
+
   useEffect(() => {
     if (session?.status === 'unauthenticated') {
       redirect('/login');
     }
 
   }, [session])
-  const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/client', fetcher);
 
   if (isLoading) {
     return 'loading...';
   }
 
   return <div>
+    <NextSeo
+      title="Simple Usage Example"
+      description="A short description goes here."
+    />
     <h2>Clients ({data?.length})</h2>
     {data?.length
       ? data?.map((client: any) =>

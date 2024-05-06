@@ -3,17 +3,10 @@
 import Validate from '@/lib/auth/validate';
 import { SessionProvider } from 'next-auth/react';
 
-interface AdminProvider {
-  session: any;
-  children: React.ReactNode;
-}
-
-export default function AdminProvider({session, children}: AdminProvider) {
+export default function AdminProvider({session, children}: any) {
   return (
-    <SessionProvider session={session}>
-      <Validate>
+    <SessionProvider session={children.session}>
         {children}
-      </Validate>
     </SessionProvider>
   );
 }

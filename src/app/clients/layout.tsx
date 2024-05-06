@@ -1,23 +1,17 @@
-'use client'
-import AdminProvider from '@/src/components/admin-provider';
-import { getServerSession } from 'next-auth/next';
-import { options } from '@/lib/auth/options';
+// 'use client';
+
 import Dashboard from '@/src/components/dashboard';
-import { redirect } from 'next/navigation';
-import { SessionProvider, useSession } from 'next-auth/react';
-import { auth } from '@/src/app/api/auth/[...nextauth]/route';
+import { Metadata } from 'next';
+import AdminProvider from '@/src/components/admin-provider';
 
-export default async function ClientLayout({children}: any) {
-  // const session = await getServerSession(options);
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Dashboard',
+  };
+}
 
-  // const session = await getServerSession(options)
-  //
-  // console.log('ClientLayout', session);
-  // if (!session) {
-  //  redirect('/login')
-  // }
-
-  return <SessionProvider session={children.session}>
+export default function ClientLayout({children}: any) {
+  return <AdminProvider>
     <Dashboard>{children}</Dashboard>
-  </SessionProvider>
+  </AdminProvider>;
 }

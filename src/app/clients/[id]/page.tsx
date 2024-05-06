@@ -1,11 +1,14 @@
 'use client';
+
 import type { MenuProps } from 'antd';
-import { Divider, Dropdown, Flex, Space, Table, Tag, Typography } from 'antd';
+import { Badge, Button, Divider, Dropdown, Flex, Modal, Space, Table, Tag, Typography } from 'antd';
 import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
-import { Guest } from '@prisma/client';
+import { Client, Guest } from '@prisma/client';
 import { FileExcelOutlined, IdcardOutlined, UnorderedListOutlined, UserAddOutlined } from '@ant-design/icons';
+import ClientEditForm from '@/src/components/ClientEditForm';
+import { useEffect, useState } from 'react';
 
 interface PostsEditProps {
   params: {
@@ -17,8 +20,13 @@ const {Title} = Typography;
 
 export default function ClientData({params}: PostsEditProps) {
   const {id} = params;
+  const [upd, updateList] = useState<boolean>(false);
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/client?id=' + id, fetcher);
+  const {data, error, isLoading, mutate} = useSWR('/api/client?id=' + id, fetcher);
+
+  useEffect(() => {
+
+  }, [upd]);
 
   if (!isLoading && !data?.id) {
     return 'no client yet';
@@ -29,6 +37,23 @@ export default function ClientData({params}: PostsEditProps) {
   };
 
   const items: MenuProps['items'] = [
+    {
+      key: '3',
+      label: (<Space>
+        <UserAddOutlined/>
+        <Link href={`../../${data?.id}/invitation`}>Go to Add guest</Link>
+      </ Space>)
+    },
+    {
+      key: '4',
+      label: (<Space>
+        <IdcardOutlined/>
+        <Link href={`../../${data?.id}/wishes`}>Go to Add Wish</Link>
+      </Space>)
+    },
+    {
+      type: 'divider',
+    },
     {
       key: '1',
       label: (
@@ -46,23 +71,6 @@ export default function ClientData({params}: PostsEditProps) {
           <span onClick={getEmailWIthGuests}>Download list of guests</span>
         </Space>),
     },
-    {
-      type: 'divider',
-    },
-    {
-      key: '3',
-      label: (<Space>
-        <UserAddOutlined/>
-        <Link href={`../../${data?.id}/invitation`}>Go to Add guest</Link>
-      </ Space>)
-    },
-    {
-      key: '4',
-      label: (<Space>
-        <IdcardOutlined/>
-        <Link href={`../../${data?.id}/wishes`}>Go to Add Wish</Link>
-      </Space>)
-    }
   ];
 
   const header = () => {
@@ -73,15 +81,36 @@ export default function ClientData({params}: PostsEditProps) {
                  justify={'space-between'}>
       <Title level={2}
              style={{margin: 0, flex: 1}}>
-        Client: {!isLoading && <>{data ? data?.name : id}</>}
+        Celebrant: {!isLoading && <>{data ? data?.name : id}</>}
       </Title>
 
       <div>Guests: {data?.guests?.length ?? 0}</div>
+
+      <Button onClick={info}>Info</Button>
+
       <Dropdown.Button placement="bottom"
                        style={{width: 'auto'}}
                        arrow={{pointAtCenter: true}}
                        menu={{items}}>Actions</Dropdown.Button>
     </Flex>;
+  };
+
+  const info = () => {
+    const modal = Modal.info({
+      title: 'Client Data',
+      icon: null,
+      width: '600px',
+      closable: true,
+      content: <ClientEditForm client={data}
+                               close={() => modal.destroy()}
+                               update={async (value: Client) => {
+                                 console.log('onOk', value);
+                                 let s = await axios.put('/api/client?id=' + id, value);
+                                 await mutate(s);
+                                 modal.destroy();
+                               }}/>,
+      footer: null
+    });
   };
 
   return <>
@@ -90,6 +119,7 @@ export default function ClientData({params}: PostsEditProps) {
            bordered={true}
            loading={isLoading}
            scroll={{y: 500}}
+           style={{marginTop: '10px'}}
            pagination={{position: ['bottomRight']}}
            title={header}
            rowKey="id"
@@ -99,7 +129,18 @@ export default function ClientData({params}: PostsEditProps) {
                     dataIndex="name"/>
       <Table.Column title="Extra Guest"
                     key="extraPerson1"
-                    dataIndex="extraPerson1"/>
+                    dataIndex="extraPerson1"
+                    render={(value: string) => {
+                      const isInvalid = value?.trim()?.includes('\s[2,]') || value?.trim()?.includes(', ');
+
+                      return isInvalid
+                        ? <Badge.Ribbon color="volcano"
+                                        text="Invalid"
+                                        style={{marginTop: '-30px'}}>
+                          <div style={{marginTop: '5px'}}>{value} </div>
+                          </Badge.Ribbon>
+                        : value;
+                    }}/>
       <Table.Column title="Email"
                     key="email"
                     dataIndex="email"/>
