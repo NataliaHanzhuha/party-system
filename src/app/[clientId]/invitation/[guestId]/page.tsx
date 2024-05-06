@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import selectComponent from '@/src/app/[clientId]/invitation/select-view';
 import Loading from '@/src/components/loading';
+import { selectView, ViewType } from '@/src/app/[clientId]/settings';
 
 export default function InvitationUpdate({params}: any) {
   const {clientId, guestId} = params;
@@ -18,6 +18,5 @@ export default function InvitationUpdate({params}: any) {
     return 'no such client';
   }
 
-
-  return selectComponent(clientId, data, guestId);
+  return selectView(ViewType.Invitation, data?.client?.invitationPage, data)
 }

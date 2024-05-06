@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import selectComponent from '@/src/app/[clientId]/invitation/select-view';
 import Loading from '@/src/components/loading';
+import { selectView, ViewType } from '@/src/app/[clientId]/settings';
 
 export default function ClientData({params}: any) {
   const {clientId} = params;
@@ -18,5 +18,12 @@ export default function ClientData({params}: any) {
     return 'no such client';
   }
 
-  return selectComponent(clientId, data);
+  const getComponentData = {
+      client: {
+        name: data?.name,
+        id: clientId
+      }
+    };
+
+  return selectView(ViewType.Invitation, data?.invitationPage, getComponentData)
 }

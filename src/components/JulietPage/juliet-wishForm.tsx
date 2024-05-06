@@ -1,3 +1,5 @@
+'use client';
+
 import { CustomThemeWrapper } from '@/src/components/JulietPage/elements';
 import { Button, Form, Input } from 'antd';
 import styles from '@/src/components/JulietPage/juliet-invitation.module.css';

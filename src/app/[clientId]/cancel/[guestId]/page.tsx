@@ -1,8 +1,8 @@
 'use client';
 import axios from 'axios';
 import useSWR from 'swr';
-import selectComponent from '@/src/app/[clientId]/cancel/select-view';
 import Loading from '@/src/components/loading';
+import { selectView, ViewType } from '@/src/app/[clientId]/settings';
 
 export default function DefaultInvitation({params}: any) {
   const {clientId, guestId} = params;
@@ -17,5 +17,5 @@ export default function DefaultInvitation({params}: any) {
     return 'no such client';
   }
 
-  return selectComponent(data);
+  return selectView(ViewType.Cancelation, data?.client?.invitationPage, data)
 }

@@ -11,13 +11,14 @@ export default function Dashboard({children}: any) {
     if(!session?.user && status === 'unauthenticated') {
       redirect('/login')
     }
-  }, [session?.user]);
+  }, [session]);
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
         <span onClick={async () => {
           await signOut({redirect: false})
+          // redirect('/login')
         }}>
           Sign out
         </span>

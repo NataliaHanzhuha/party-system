@@ -3,7 +3,7 @@
 import axios from 'axios';
 import useSWR from 'swr';
 import Loading from '@/src/components/loading';
-import selectComponent from '@/src/app/[clientId]/wishes/select-view';
+import { selectView, ViewType } from '@/src/app/[clientId]/settings';
 
 export default function WishForm({params}: any) {
   const {clientId} = params;
@@ -18,5 +18,5 @@ export default function WishForm({params}: any) {
     return 'no such client';
   }
 
-  return selectComponent(data);
+  return selectView(ViewType.Wish, data?.invitationPage, data)
 }

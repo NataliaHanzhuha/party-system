@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FormProps, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -23,19 +23,24 @@ interface Login {
 const defaultValues: Login = {
   email: '',
   password: '',
-}
+};
 
 export default function LoginForm(): JSX.Element {
-  const { data: session, update } = useSession();
+  const {data: session, update, status} = useSession();
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = (error: string) => {
+    api['error']({message: 'Auth error', description: error,});
+  };
 
   useEffect(() => {
     if (session?.user) {
       redirect('/clients');
     }
-  }, [session?.user])
+  }, [session?.user]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  // const [error, setError] = useState<string>('');
   const router = useRouter();
   const form = useForm<Login>({
     resolver: zodResolver(formSchema),
@@ -53,8 +58,8 @@ export default function LoginForm(): JSX.Element {
       redirect: false,
     });
     if (res?.error) {
-
-      setError(res?.error);
+      // setError(res?.error);
+      openNotificationWithIcon(res.error);
       setIsLoading(false);
     } else {
       console.log(res);
@@ -63,13 +68,11 @@ export default function LoginForm(): JSX.Element {
     }
   };
 
-  // @ts-ignore
-  const onFinishFailed: FormProps<any>['onFinishFailed'] = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  if (status === 'loading') {
+    return <>loading...</>;
+  }
 
   return (
-
     <Form
       name="basic"
       {...form}
@@ -78,7 +81,6 @@ export default function LoginForm(): JSX.Element {
       style={{maxWidth: 600}}
       initialValues={{remember: true}}
       onFinish={onSubmit}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
@@ -97,8 +99,6 @@ export default function LoginForm(): JSX.Element {
         <Input.Password/>
       </Form.Item>
 
-      {error && <p>{error}</p>}
-
       <Form.Item wrapperCol={{offset: 8, span: 16}}>
         <Button type="primary"
                 loading={isLoading}
@@ -106,6 +106,7 @@ export default function LoginForm(): JSX.Element {
           Sign In
         </Button>
       </Form.Item>
+      {contextHolder}
     </Form>
   );
 }

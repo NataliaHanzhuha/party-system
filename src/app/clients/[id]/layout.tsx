@@ -8,7 +8,7 @@ export async function generateMetadata({params}: any): Promise<Metadata> {
     .then(res => res.data);
   return {
     title: 'Celebrant ' + client?.name ?? 'Celebrant ',
-    description: 'hello world'
+    description: 'Table data with celebrant guests info'
   };
 }
 
