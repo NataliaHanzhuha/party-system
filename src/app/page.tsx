@@ -3,13 +3,7 @@
 import { Button, Flex, Layout, Typography } from 'antd';
 import Link from 'next/link';
 
-
 export default function Page({}) {
-  // return <main>
-  //   <Link href='/login'>Login</Link>
-  //   first page here
-  // </main>;
-
   return (
     <Layout style={{
       height: '100vh'
@@ -42,19 +36,15 @@ export default function Page({}) {
         minHeight: '85vh',
         background: 'black'
       }}>
-        {/*<div*/}
-        {/*  style={{*/}
-        {/*    padding: 24,*/}
-        {/*    minHeight: 380,*/}
-        {/*  }}*/}
-        {/*>*/}
-        <Flex gap="middle"
+        <Flex gap="small"
               style={{
                 padding: 24,
                 height: '100%'
               }}
+              justify={'center'}
+              wrap={'wrap'}
               align="center">
-          <Flex gap={'middle'}
+          <Flex gap={'small'}
                 vertical={true}
                 align={'center'}
                 justify={'center'}>
@@ -73,11 +63,10 @@ export default function Page({}) {
             </iframe>
           </div>
         </Flex>
-        {/*</div>*/}
       </Layout.Content>
 
-      <Layout.Footer style={{textAlign: 'center', justifySelf: 'end', gap: '10px',  background: 'black'}}>
-       <span style={{color: 'white'}}> Ant Design ©{new Date().getFullYear()} Created by Ant UED</span>
+      <Layout.Footer style={{textAlign: 'center', justifySelf: 'end', gap: '10px', background: 'black'}}>
+        <span style={{color: 'white'}}> Ant Design ©{new Date().getFullYear()} Created by Ant UED</span>
         <Link href="/login">
           <Button type={'link'}>Admin Login</Button>
         </Link>

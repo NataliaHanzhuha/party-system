@@ -21,7 +21,7 @@ export default function Dashboard({children}: any) {
       key: '1',
       label: (
         <span onClick={async () => {
-          await signOut({redirect: true, callbackUrl: '/celebrant/login'});
+          await signOut({redirect: true, callbackUrl: '/'});
         }}>
           Sign out
         </span>
@@ -48,14 +48,10 @@ export default function Dashboard({children}: any) {
 
             <Dropdown menu={{items}}
                       placement="bottom">
-              <Avatar size={{xs: 24, sm: 32, md: 40, lg: 44}}
+              <Avatar size={{sm: 40, lg: 44}}
               >{session?.client?.name ?? 'USER'}</Avatar>
             </Dropdown>
-
-            {/*<Breadcrumb style={{color: 'white !important'}}*/}
-            {/*            itemRender={itemRender}*/}
-            {/*            routes={routes}*/}
-            {/*/>*/}
+            
           </Layout.Header>
           <Layout.Content style={{padding: '0 48px'}}>
             <div style={{flex: 1}}>

@@ -11,7 +11,7 @@ export default function Dashboard({children}: any) {
   const {data: session, status} = useSession();
   useEffect(() => {
     if (!session?.user && status === 'unauthenticated') {
-      redirect('/login');
+      redirect('/');
     }
   }, [session]);
   const items: MenuProps['items'] = [
