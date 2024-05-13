@@ -15,7 +15,7 @@ export default function ClientData({params}: PostsEditProps) {
   const {data: session, status}: {data: any, status: string} = useSession();
 
   if (!session?.client?.id) {
-    console.log(session.client);
+    console.log(session);
     return <NotFound/>
   }
 
