@@ -51,7 +51,7 @@ export default function Dashboard({children}: any) {
               <Avatar size={{sm: 40, lg: 44}}
               >{session?.client?.name ?? 'USER'}</Avatar>
             </Dropdown>
-            
+
           </Layout.Header>
           <Layout.Content style={{padding: '0 48px'}}>
             <div style={{flex: 1}}>

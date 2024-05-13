@@ -54,8 +54,8 @@ export default function ClientTable({id, role}: { id: string, role: Roles }) {
   };
 
   const isAdmin = role === Roles.Admin;
-  const invitationUrl = window.location.origin + `/${id}/invitation`;
-  const wishUrl = window.location.origin + `/${data?.id}/wishes`;
+  const invitationUrl = window?.location?.origin + `/${id}/invitation`;
+  const wishUrl = window?.location?.origin + `/${data?.id}/wishes`;
 
   const RoledLink = ({title, url, forAll = false}: { title: string, url: string, forAll?: boolean }) => {
     return (<>
