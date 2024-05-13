@@ -1,0 +1,60 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  height: 100vh;
+  min-height: 300px;
+  padding: 0 10px;
+  background-color: #EDE7DC;
+  background-image: url("https://static-cse.canva.com/blob/679661/Grey_Set7_12.1f3c1aa3.png");
+  background-size: 77vh;
+  background-position: center right;
+  background-blend-mode: darken;
+  background-repeat: repeat-x;
+}
+
+.page h2 {
+  font-weight: 500;
+}
+
+.heading {
+  color: black;
+  text-align: center;
+}
+
+.formWrapper {
+  border-radius: 10px;
+  width: 85%;
+  padding: 0 10px;
+  color: #868B8E;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #CCAFA5;
+}
+
+.fullWButton {
+  width: 80%;
+  display: block;
+  border-color: #CCAFA5 !important;
+}
+
+.formItem {
+  display: flex;
+  justify-content: center;
+}
+
+.notification {
+  padding: 30px;
+  margin: 0 20px;
+  text-align: center;
+}
+
+@media screen and (min-height: 640px) and (max-width: 1024px) {
+  .page {
+    background-size: 98vh;
+  }
+}

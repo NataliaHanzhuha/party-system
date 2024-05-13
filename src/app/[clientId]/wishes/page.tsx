@@ -1,22 +1,21 @@
 'use client';
 
-import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/src/components/loading';
 import { selectView, ViewType } from '@/src/app/[clientId]/settings';
+import { fetcher, swrOptions } from '@/lib/auth/session';
 
 export default function WishForm({params}: any) {
   const {clientId} = params;
-  const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/client?id=' + clientId, fetcher);
+  const {data, error, isLoading} = useSWR('/api/client?id=' + clientId, fetcher, swrOptions);
+  const {page, loading, error: errorPage} = selectView(ViewType.Wish, data?.invitationPage, data);
 
   if (isLoading) {
-    return <Loading/>;
+    return loading;
   }
 
-  if (!data?.id) {
-    return 'no such client';
+  if (!data?.id || error) {
+    return errorPage;
   }
 
-  return selectView(ViewType.Wish, data?.invitationPage, data)
+  return page;
 }

@@ -9,18 +9,19 @@ import Link from 'next/link';
 
 export default function Dashboard({children}: any) {
   const {data: session, status} = useSession();
+
   useEffect(() => {
-    if (!session?.user && status === 'unauthenticated') {
-      redirect('/login');
+    if (!session?.client) {
+      redirect('/celebrant/login');
     }
-  }, [session]);
+  }, [session?.client]);
+
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
         <span onClick={async () => {
-          await signOut({redirect: false});
-          redirect('/login')
+          await signOut({redirect: true, callbackUrl: '/celebrant/login'});
         }}>
           Sign out
         </span>
@@ -47,8 +48,8 @@ export default function Dashboard({children}: any) {
 
             <Dropdown menu={{items}}
                       placement="bottom">
-              <Avatar size={{ sm: 32, md: 40, lg: 44}}
-              >{session?.user?.name ?? 'USER'}</Avatar>
+              <Avatar size={{xs: 24, sm: 32, md: 40, lg: 44}}
+              >{session?.client?.name ?? 'USER'}</Avatar>
             </Dropdown>
 
             {/*<Breadcrumb style={{color: 'white !important'}}*/}
@@ -61,7 +62,9 @@ export default function Dashboard({children}: any) {
               {children}
             </div>
           </Layout.Content>
-          <Layout.Footer style={{textAlign: 'center', padding: 0}}>Created by Nata Hanzhuha</Layout.Footer>
+          <Layout.Footer style={{textAlign: 'center'}}>
+            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          </Layout.Footer>
         </Layout>
       </ConfigProvider>
     </SessionProvider>

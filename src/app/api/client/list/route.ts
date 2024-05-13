@@ -17,4 +17,5 @@ export async function GET(request: NextRequest) {
 
   const filePath = await excelDoc(client?.guests, client);
   return await sendEmailWithGuestsList(client, filePath);
+  // return  NextResponse.json(null);
 }

@@ -1,21 +1,20 @@
 'use client';
-import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/src/components/loading';
 import { selectView, ViewType } from '@/src/app/[clientId]/settings';
+import { fetcher, swrOptions } from '@/lib/auth/session';
 
 export default function DefaultInvitation({params}: any) {
   const {clientId, guestId} = params;
-  const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/guest?id=' + guestId + '&clientId=' + clientId, fetcher);
+  const {data, error, isLoading} = useSWR('/api/guest?id=' + guestId + '&clientId=' + clientId, fetcher, swrOptions);
+  const {page, loading, error: errorPage} = selectView(ViewType.Cancelation, data?.client?.invitationPage, data);
 
   if (isLoading) {
-    return  <Loading />;
+    return loading;
   }
 
-  if (!data?.id) {
-    return 'no such client';
+  if (!data?.id || error) {
+    return errorPage;
   }
 
-  return selectView(ViewType.Cancelation, data?.client?.invitationPage, data)
+  return page;
 }

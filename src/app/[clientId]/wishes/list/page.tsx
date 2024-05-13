@@ -2,14 +2,14 @@
 
 import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/src/components/loading';
+import Loading from '@/src/components/ui/loading';
 import { Wish } from '@prisma/client';
 import styles from './wishList.module.css';
+import { fetcher, swrOptions } from '@/lib/auth/session';
 
 export default function WishList({params}: any) {
   const {clientId} = params;
-  const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/wish?clientId=' + clientId, fetcher);
+  const {data, error, isLoading} = useSWR('/api/wish?clientId=' + clientId, fetcher, swrOptions);
 
   if (isLoading) {
     return <Loading/>;

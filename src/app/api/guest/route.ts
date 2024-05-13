@@ -8,41 +8,53 @@ export async function GET(request: NextRequest) {
   const clientId: string | null = request.nextUrl.searchParams.get('clientId');
 
   if (id) {
-    const client = await db.guest.findUnique({
+    const guest = await db.guest.findUnique({
       where: {id, clientId},
       include: {
         client: true
       }
     });
 
-    if (!client) {
-      return NextResponse.error();
+    if (!guest) {
+      return NextResponse.json('No guest with id: ' + id, {status: 404});
     }
 
-    return NextResponse.json(client);
+    return NextResponse.json(guest);
   } else {
-    const clients = await db.guest.findMany();
-    return NextResponse.json(clients ?? []);
+    const guests = await db.guest.findMany();
+    return NextResponse.json(guests ?? []);
   }
 }
 
 export async function POST(request: NextRequest) {
   const clientId: string = request.nextUrl.searchParams.get('clientId')!;
   const {name, email, extraPerson1} = await request.json();
+  const client: any = await db.client.findUnique({where: {id: clientId}});
+  const isExistGuest: any | null = await db.guest.findFirst({where: {email}});
 
-  const isExistGuest: any | null = db.guest.findFirst({where: {email}});
+  if (isExistGuest?.id) {
+    if (isExistGuest.status === 'REJECTED') {
+      await db.guest.delete({where: {email, id: isExistGuest.id}});
 
-  if (isExistGuest && isExistGuest.status === 'REJECTED') {
-    await db.guest.delete({where: {email, id: isExistGuest.id}});
+      const guest = await db.guest.create({
+        data: {name, clientId, email, extraPerson1, status: 'NEW'},
+      });
+
+      return await sendNewGuestEvent(client, guest);
+    } else {
+      const guest = await db.guest.update({
+        where: {id: isExistGuest?.id, clientId},
+        data: {name, email, extraPerson1, status: 'EDITED'},
+      });
+
+      return await sendNewGuestEvent(client, guest);
+    }
   }
 
   const guest = await db.guest.create({
     data: {name, clientId, email, extraPerson1, status: 'NEW'},
   });
 
-  const client: any = await db.client.findUnique(
-    {where: {id: clientId}});
-  console.log('POST', client, guest);
   return await sendNewGuestEvent(client, guest);
   // return NextResponse.json(guest);
 }
@@ -69,5 +81,15 @@ export async function PUT(request: NextRequest) {
     where: {id, clientId},
     data: {status: 'REJECTED'},
   });
+  return NextResponse.json(guest);
+}
+
+export async function DELETE(request: NextRequest) {
+  const id: string = request.nextUrl.searchParams.get('id')!;
+
+  const guest = await db.guest.delete({
+    where: {id}
+  });
+
   return NextResponse.json(guest);
 }

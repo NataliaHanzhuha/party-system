@@ -1,6 +1,6 @@
 import { Flex, Spin, ConfigProvider } from 'antd';
 
-export default function Loading() {
+export default function Loading({backgroundColor = 'black'}: {backgroundColor?: string}) {
   return  <ConfigProvider
     theme={{
       components: {
@@ -14,7 +14,7 @@ export default function Loading() {
           style={{
             height: '100vh',
             width: '100vw',
-            backgroundColor: 'black'
+            backgroundColor: backgroundColor
           }}
           gap="middle">
       <Spin size="large"/>

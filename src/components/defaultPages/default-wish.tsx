@@ -1,13 +1,13 @@
 'use client';
 
-import { CustomThemeWrapper } from '@/src/components/JulietPage/elements';
-import styles from '@/src/components/JulietPage/juliet-invitation.module.css';
+import { CustomThemeWrapper } from '@/src/components/defaultPages/elements';
+import { useState } from 'react';
 import { Wish } from '@prisma/client';
 import axios from 'axios';
-import { ReactNode, useState } from 'react';
 import WishPage from '@/src/components/ui/WishPage';
+import styles from './default.module.css';
 
-export default function JulietWishForm({data}: any): ReactNode {
+export default function DefaultWish({data}: any) {
   const [isSentWish, sent] = useState<Wish | null>(null);
 
   const sendWish = async ({text, name}: any) => {

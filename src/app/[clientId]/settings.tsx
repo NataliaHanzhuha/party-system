@@ -1,9 +1,15 @@
 import { Client } from '@prisma/client';
-import JulietInvitation from '@/src/components/JulietPage/juliet-invitation';
-import DefaultInvitation from '@/src/components/default-form';
 import { PageView } from '@/types/types';
+
+import JulietInvitation from '@/src/components/JulietPage/juliet-invitation';
 import JulietCancelInvitation from '@/src/components/JulietPage/juliet-cancel';
 import JulietWishForm from '@/src/components/JulietPage/juliet-wishForm';
+
+import DefaultWish from '@/src/components/defaultPages/default-wish';
+import DefaultInvitation from '@/src/components/defaultPages/default-form';
+import DefaultCancel from '@/src/components/defaultPages/default-cancel';
+import Loading from '@/src/components/ui/loading';
+import NotFound from '@/src/components/defaultPages/not-found';
 
 export const JulietSettings = {
   metadata: {
@@ -26,7 +32,9 @@ export const JulietSettings = {
   },
   invitationTemplate: JulietInvitation,
   cancelTemplate: JulietCancelInvitation,
-  wishTemplate: JulietWishForm
+  wishTemplate: JulietWishForm,
+  loading: <Loading backgroundColor={'black'}/>,
+  error: <NotFound />
 };
 
 export const DefaultSettings = {
@@ -37,8 +45,10 @@ export const DefaultSettings = {
     };
   },
   invitationTemplate: DefaultInvitation,
-  cancelTemplate: DefaultInvitation,
-  wishTemplate: DefaultInvitation
+  cancelTemplate: DefaultCancel,
+  wishTemplate: DefaultWish,
+  loading: <Loading backgroundColor={'white'}/>,
+  error: <NotFound />
 };
 
 export enum ViewType {
@@ -51,18 +61,31 @@ export const selectView = (type: ViewType, invitationPage: any, data: any) => {
   const fieldsArray: string[] = ['invitationTemplate', 'cancelTemplate', 'wishTemplate'];
   const selectedView: any = fieldsArray[type];
 
+  let page = null;
+  let loading = null;
+  let error = null;
+
   switch (invitationPage) {
     case PageView[PageView.JULIETPAGE] : {
       // @ts-ignore
       const Invitation = JulietSettings[selectedView];
 
-      return <Invitation data={data}/>;
+      page = <Invitation data={data}/>;
+      loading = JulietSettings.loading;
+      error = JulietSettings.error;
+      break;
     }
     default: {
       // @ts-ignore
       const Invitation = DefaultSettings[selectedView];
 
-      return <Invitation data={data}/>;
+      page = <Invitation data={data}/>;
+      loading = DefaultSettings.loading;
+      error = DefaultSettings.error;
+
+      break;
     }
   }
+
+  return {page, loading, error}
 };

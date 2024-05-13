@@ -75,15 +75,15 @@ export default function ClientEditForm({client, update, close}: ClientFormInterf
         </Select>
       </Form.Item>
 
-      <Form.Item name={['EmailTemplateDetails', 'mediaEmailId']}
-                 label="Media Email ID">
-        <Input type={'text'}/>
-      </Form.Item>
+      {/*<Form.Item name={['EmailTemplateDetails', 'mediaEmailId']}*/}
+      {/*           label="Media Email ID">*/}
+      {/*  <Input type={'text'}/>*/}
+      {/*</Form.Item>*/}
 
-      <Form.Item name={['EmailTemplateDetails', 'invitationEmailId']}
-                 label="Invitation Email ID">
-        <Input type={'text'}/>
-      </Form.Item>
+      {/*<Form.Item name={['EmailTemplateDetails', 'invitationEmailId']}*/}
+      {/*           label="Invitation Email ID">*/}
+      {/*  <Input type={'text'}/>*/}
+      {/*</Form.Item>*/}
 
       <Form.Item {...tailLayout}>
         <Space>

@@ -1,17 +1,14 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { FormProps, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
 import { Button, Form, Input, notification } from 'antd';
+import { redirect } from 'next/navigation';
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: 'Email is required.',
-  }),
+  email: z.string().email({message: 'Email is required.'}),
   password: z.string().nonempty({message: 'Password is required'}),
 });
 
@@ -26,24 +23,22 @@ const defaultValues: Login = {
 };
 
 export default function LoginForm(): JSX.Element {
-  const {data: session, update, status} = useSession();
   const [api, contextHolder] = notification.useNotification();
+  const {data: session, update, status} = useSession();
+
+  useEffect(() => {
+    if (!!session?.client?.id) {
+      redirect('/celebrant/dashboard');
+    }
+  }, [session?.client?.id]);
 
   const openNotificationWithIcon = (error: string) => {
     api['error']({message: 'Auth error', description: error,});
   };
 
-  useEffect(() => {
-    if (session?.user) {
-      redirect('/clients');
-    }
-  }, [session?.user]);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<string>('');
-  const router = useRouter();
   const form = useForm<Login>({
-    resolver: zodResolver(formSchema),
+    // resolver: zodResolver(formSchema),
     defaultValues,
   });
 
@@ -51,20 +46,18 @@ export default function LoginForm(): JSX.Element {
     values: z.infer<typeof formSchema>
   ): Promise<void> => {
     setIsLoading(true);
-    const res = await signIn('admin', {
+    const res = await signIn('client', {
       email: values.email,
       password: values.password,
-      callbackUrl: `/`,
-      redirect: false,
+      callbackUrl: `/celebrant/dashboard`,
+      redirect: true,
     });
     if (res?.error) {
-      // setError(res?.error);
       openNotificationWithIcon(res.error);
       setIsLoading(false);
     } else {
-      console.log(res);
+      setIsLoading(false);
       await update({...values});
-      router.push('/clients');
     }
   };
 

@@ -52,10 +52,10 @@ const sendSingleEvent = async (msg: MailDataRequired, guest?: any) => {
       console.log('Email sent');
       return NextResponse.json(guest);
     })
-    // .catch((error) => {
-    //   console.error(JSON.stringify(error));
-    //   // return NextResponse.json(null);
-    // });
+    .catch((error) => {
+      console.error(JSON.stringify(error));
+      return NextResponse.json(null);
+    });
 };
 
 const sendManyEmailsRequest = (msg: MailDataRequired) => {

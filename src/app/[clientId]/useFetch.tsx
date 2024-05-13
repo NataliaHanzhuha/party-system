@@ -1,6 +1,6 @@
 import axios from 'axios';
 import useSWR from 'swr';
-import Loading from '@/src/components/loading';
+import Loading from '@/src/components/ui/loading';
 
 export default function useFetch(url: string) {
   const fetcher = (url: string) => axios.get(url).then(res => res.data);

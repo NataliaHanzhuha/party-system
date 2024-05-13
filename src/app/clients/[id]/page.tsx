@@ -1,4 +1,5 @@
 import ClientTable from '@/src/components/ClientTable';
+import { Roles } from '@/types/types';
 
 interface PostsEditProps {
   params: {
@@ -7,5 +8,5 @@ interface PostsEditProps {
 }
 
 export default function ClientData({params}: PostsEditProps) {
-  return <ClientTable id={params.id}/>;
+  return <ClientTable id={params.id} role={Roles.Admin}/>;
 }
