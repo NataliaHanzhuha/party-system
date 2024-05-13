@@ -15,6 +15,7 @@ const userParams = (user: any): any => {
     last_name: user.last_name,
     role: user.role,
     name: `${user.first_name} ${!!user?.last_name ? user?.last_name : ''}`.trim(),
+    host: process.env.NEXTAUTH_URL
   };
 };
 

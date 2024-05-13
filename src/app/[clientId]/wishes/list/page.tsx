@@ -6,17 +6,18 @@ import Loading from '@/src/components/ui/loading';
 import { Wish } from '@prisma/client';
 import styles from './wishList.module.css';
 import { fetcher, swrOptions } from '@/lib/auth/session';
+import NotFound from '@/src/components/defaultPages/not-found';
 
 export default function WishList({params}: any) {
   const {clientId} = params;
   const {data, error, isLoading} = useSWR('/api/wish?clientId=' + clientId, fetcher, swrOptions);
 
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
-  if (!data?.id) {
-    return 'Any wishes yet';
+  if (!data?.id || error) {
+    return <NotFound />;
   }
 
   const date = (date: Date): string => {

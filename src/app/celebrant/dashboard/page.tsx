@@ -18,5 +18,5 @@ export default function ClientData({params}: PostsEditProps) {
     return <NotFound/>
   }
 
-  return <ClientTable id={session?.client?.id!} role={Roles.Client}/>;
+  return <ClientTable id={session?.client?.id!} role={Roles.Client} host={session?.client?.host}/>;
 }
