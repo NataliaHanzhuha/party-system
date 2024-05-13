@@ -26,16 +26,16 @@ import { usePathname } from 'next/navigation';
 
 
 export default function ClientTable({id, role, host}: { id: string, role: Roles, host: string }) {
+  console.log(id);
   const [messageApi, contextHolder] = message.useMessage();
   const [isDuplicate, setIsDuplicate] = useState<string[]>([]);
   const {data, error, isLoading, mutate} = useSWR('/api/client?id=' + id, fetcher);
   const pathname = usePathname()
 
-  if (!isLoading && !data?.id) {
+  if (!id || !isLoading && !data?.id) {
     return 'no client yet';
   }
 
-  console.log(pathname);
   const getEmailWIthGuests = async () => {
     await axios.get('/api/client/list?id=' + id);
     messageApi.success('Email with guest list was sent successfully!');

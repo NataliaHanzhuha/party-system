@@ -14,9 +14,10 @@ interface PostsEditProps {
 export default function ClientData({params}: PostsEditProps) {
   const {data: session, status}: {data: any, status: string} = useSession();
 
-  if (!session?.client?.id && status !== 'loading') {
+  if (!session?.client?.id) {
+    console.log(session.client);
     return <NotFound/>
   }
 
-  return <ClientTable id={session?.client?.id!} role={Roles.Client} host={session?.client?.host}/>;
+  return <ClientTable id={session.client.id!} role={Roles.Client} host={session?.client?.host}/>;
 }
