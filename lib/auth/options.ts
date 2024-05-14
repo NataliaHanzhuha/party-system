@@ -142,7 +142,7 @@ export const options: NextAuthOptions = {
           expires_at: user.expires,
           refresh_token: user.refresh_token,
           user: userParams(user),
-          client: userParams(user),
+          // client: userParams(user),
           error: null,
         };
       } else if (Date.now() < (token.expires_at ?? 0)) {
@@ -169,20 +169,21 @@ export const options: NextAuthOptions = {
     async session({session, token}: { session: Session, token: any }): Promise<any> {
       if (token.error) {
         session.error = token.error;
-        session.user = token?.user?.role === Roles.Admin ? token.user as any : null;
-        session.client = token?.user?.role === Roles.Client ? token.user : null;
+        session.user = token.user as any;
+        // session.user = token?.user?.role === Roles.Admin ? token.user as any : null;
+        // session.client = token?.user?.role === Roles.Client ? token.user : null;
         session.expires = new Date(
           new Date().setDate(new Date().getDate() - 1)
         ).toISOString();
       } else {
-        const {id, name, email, role} = token.user as any;
-        console.log(role, Roles[role]);
+        // const {id, name, email, role} = token.user as any;
         session.access_token = token.access_token;
         session.tokenIsRefreshed = token?.tokenIsRefreshed ?? false;
         session.expires_at = token.expires_at;
         session.refresh_token = token.refresh_token;
-        session.user = role === Roles.Admin ? {id, name, email} as any : null;
-        session.client = role === Roles.Client ? token.user : null;
+        // session.user = role === Roles.Admin ? {id, name, email} as any : null;
+        // session.client = role === Roles.Client ? token.user : null;
+        session.user = token.user as any;
       }
       return session;
     },

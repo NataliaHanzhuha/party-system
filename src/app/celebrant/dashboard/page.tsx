@@ -14,10 +14,10 @@ interface PostsEditProps {
 export default function ClientData({params}: PostsEditProps) {
   const {data: session, status}: {data: any, status: string} = useSession();
 
-  if (!session?.client?.id) {
+  if (!session?.user?.id) {
     console.log(session);
     return <NotFound/>
   }
 
-  return <ClientTable id={session.client.id!} role={Roles.Client} host={session?.client?.host}/>;
+  return <ClientTable id={session?.user?.id!} role={Roles.Client} host={session?.user?.host}/>;
 }

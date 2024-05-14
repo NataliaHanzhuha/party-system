@@ -11,10 +11,10 @@ export default function Dashboard({children}: any) {
   const {data: session, status} = useSession();
 
   useEffect(() => {
-    if (!session?.client) {
+    if (!session?.user) {
       redirect('/celebrant/login');
     }
-  }, [session?.client]);
+  }, [session?.user]);
 
   const items: MenuProps['items'] = [
     {
@@ -49,7 +49,7 @@ export default function Dashboard({children}: any) {
             <Dropdown menu={{items}}
                       placement="bottom">
               <Avatar size={{sm: 40, lg: 44}}
-              >{session?.client?.name ?? 'USER'}</Avatar>
+              >{session?.user?.name ?? 'USER'}</Avatar>
             </Dropdown>
 
           </Layout.Header>

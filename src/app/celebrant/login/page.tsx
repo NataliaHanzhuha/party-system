@@ -27,10 +27,10 @@ export default function LoginForm(): JSX.Element {
   const {data: session, update, status} = useSession();
 
   useEffect(() => {
-    if (!!session?.client?.id) {
-      redirect('/celebrant/dashboard');
+    if (!!session?.user?.id) {
+      redirect('/celebrant/dashboard?id=' + session?.user?.id);
     }
-  }, [session?.client?.id]);
+  }, [session?.user?.id]);
 
   const openNotificationWithIcon = (error: string) => {
     api['error']({message: 'Auth error', description: error,});
@@ -49,7 +49,6 @@ export default function LoginForm(): JSX.Element {
     const res = await signIn('client', {
       email: values.email,
       password: values.password,
-      callbackUrl: `/celebrant/dashboard`,
       redirect: true,
     });
     if (res?.error) {
