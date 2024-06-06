@@ -67,7 +67,7 @@ const sendManyEmailsRequest = (msg: MailDataRequired) => {
     })
     .catch((error) => {
       console.error(JSON.stringify(error));
-      return NextResponse.json(null);
+      return NextResponse.error();
     });
 };
 
@@ -76,9 +76,13 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
   const pathToAttachment = path.resolve(link1);
   const attachment = fs.readFileSync(pathToAttachment).toString('base64');
   const msg = {
-    to: client.email,
     from: 'nataliiahanzhuha@gmail.com',
     subject: 'Party guest list',
+    personalizations: [{
+      to: {email: client.email},
+      bcc: {email: 'daaremu@gmail.com'},
+      cc: {email: 'nataliiahanzhuhawork@gmail.com'},
+    }],
     text: `Hi, ${client.name}. I attached excel file with list of your party guests bellow.`,
     attachments: [
       {
@@ -90,7 +94,7 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
     ]
   };
 
-  console.log(JSON.stringify(msg));
+  // console.log(JSON.stringify(msg));
   return sgMail.send(msg)
     .then(() => {
       console.log('Email sent');
@@ -99,7 +103,8 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
         message: 'Email sent to ' + client.email + '; from: nataliiahanzhuha@gmail.com'});
     })
     .catch((error) => {
-      console.error(JSON.stringify(error));
+      deleteExcelFile(link1);
+      console.log(JSON.stringify(error));
       return NextResponse.json(null);
     });
 };

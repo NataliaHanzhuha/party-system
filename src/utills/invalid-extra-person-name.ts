@@ -8,5 +8,7 @@ export const invalidExtraPersonName = (value: string | null) => {
     || value?.trim()?.toLowerCase() === 'me'
     || value?.trim()?.toLowerCase()?.includes('none')
     || value?.trim()?.toLowerCase()?.includes('0')
+    || value?.trim()?.toLowerCase()?.includes('yet')
+    || value?.trim()?.toLowerCase()?.includes("don't")
     // || value?.trim()?.toLowerCase()?.includes(' or ')
 }

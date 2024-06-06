@@ -34,7 +34,8 @@ export const JulietSettings = {
   cancelTemplate: JulietCancelInvitation,
   wishTemplate: JulietWishForm,
   loading: <Loading backgroundColor={'black'}/>,
-  error: <NotFound />
+  error: <NotFound />,
+  domain: 'juliet-birthday'
 };
 
 export const DefaultSettings = {
@@ -48,7 +49,8 @@ export const DefaultSettings = {
   cancelTemplate: DefaultCancel,
   wishTemplate: DefaultWish,
   loading: <Loading backgroundColor={'white'}/>,
-  error: <NotFound />
+  error: <NotFound />,
+  domain: 'birthday'
 };
 
 export enum ViewType {

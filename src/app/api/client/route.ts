@@ -4,16 +4,27 @@ import { Client, Guest } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');
+  const domain: string | null = request.nextUrl.searchParams.get('domain');
   console.log(id);
+
+  const include = {
+    guests: true,
+    wishes: true,
+    EmailTemplateDetails: true
+  }
 
   if (id) {
     const client = await db.client.findUnique({
-      where: {id},
-      include: {
-        guests: true,
-        wishes: true,
-        EmailTemplateDetails: true
-      }
+      where: {id}, include});
+
+    if (!client) {
+      return NextResponse.json('No client with id: ' + id, {status: 404});
+    }
+
+    return NextResponse.json(client);
+  } else if (domain) {
+    const client = await db.client.findFirst({
+      where: {name: domain}, include
     });
 
     if (!client) {
@@ -21,7 +32,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(client);
-  } else {
+  } else{
     const clients = await db.client.findMany();
     return NextResponse.json(clients ?? []);
   }

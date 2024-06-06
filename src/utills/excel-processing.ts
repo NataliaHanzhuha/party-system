@@ -11,6 +11,7 @@ export const excelDoc = (arr: Guest[], client: Client) => {
     {header: '#', key: 'index', width: 20},
     {header: 'Guest name', key: 'name', width: 25},
     {header: 'Second person', key: 'extraPerson1', width: 25},
+    {header: 'Email', key: 'email', width: 25},
     {header: 'Status', key: 'status', width: 10},
   ];
   worksheet.getRow(1).font = {bold: true};
@@ -20,8 +21,9 @@ export const excelDoc = (arr: Guest[], client: Client) => {
   arr.forEach((guest, i) => {
     worksheet.addRow({
       index: i + 1,
-      name: guest.name,
-      extraPerson1: guest?.extraPerson1 ?? '-',
+      name: guest?.name,
+      extraPerson1: guest?.extraPerson1 ?? '',
+      email: guest?.email,
       status: guest?.status
     });
 
