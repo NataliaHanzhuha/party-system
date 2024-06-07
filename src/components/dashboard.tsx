@@ -13,7 +13,8 @@ export default function Dashboard({children}: any) {
     if (!session?.user && status === 'unauthenticated') {
       redirect('/');
     }
-  }, [session]);
+  }, [session, status]);
+
   const items: MenuProps['items'] = [
     {
       key: '1',

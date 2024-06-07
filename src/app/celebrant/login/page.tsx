@@ -22,7 +22,7 @@ const defaultValues: Login = {
   password: '',
 };
 
-export default function LoginForm(): JSX.Element {
+export default function LoginForm() {
   const [api, contextHolder] = notification.useNotification();
   const {data: session, update, status} = useSession();
 

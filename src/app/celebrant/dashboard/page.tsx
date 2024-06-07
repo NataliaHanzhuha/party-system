@@ -11,11 +11,10 @@ interface PostsEditProps {
   };
 }
 
-export default function ClientData({params}: PostsEditProps) {
-  const {data: session, status}: {data: any, status: string} = useSession();
+export default function ClientData() {
+  const {data: session}: {data: any, status: string} = useSession();
 
   if (!session?.user?.id) {
-    console.log(session);
     return <NotFound/>
   }
 

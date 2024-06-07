@@ -1,23 +1,24 @@
 'use client';
+
 import Link from 'next/link';
 import axios from 'axios';
 import useSWR from 'swr';
 import { Avatar, Card, Empty, Flex, Modal, Space, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ClientEditForm from '@/src/components/ClientEditForm';
 import { Client } from '@prisma/client';
 
-export default function ClientList() {
+export default function Page() {
   const session = useSession();
   const fetcher = (url: string) => axios.get(url).then(res => res.data);
-  const {data, error, isLoading, mutate} = useSWR('/api/client', fetcher);
+  const {data, isLoading, mutate} = useSWR('/api/client', fetcher);
 
   useEffect(() => {
     if (session?.status === 'unauthenticated') {
-      redirect('/login');
+      // redirect('/login');
     }
 
   }, [session]);
