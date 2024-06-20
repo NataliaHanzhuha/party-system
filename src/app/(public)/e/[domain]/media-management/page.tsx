@@ -5,7 +5,7 @@ import { Typography } from 'antd';
 import MediaForm from '@/src/app/(public)/e/[domain]/(components)/MediaForm';
 import { useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
 import { Client } from '@prisma/client';
-import { PagesViews } from '@/src/app/(settings)/constant';
+import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { usePermition } from '@/src/app/(public)/e/[domain]/(hooks)/usePermition';
 
 import styles from '@/src/app/(public)/e/[domain]/(styles)/mm.module.css';

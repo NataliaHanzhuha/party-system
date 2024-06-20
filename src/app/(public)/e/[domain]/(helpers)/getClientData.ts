@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { fromKebabToCapitalCase } from '@/src/utills/text-processing';
 import axios from 'axios';
-import { permissions } from '@/src/app/(settings)/permits';
+import { permissions } from '@/src/app/(public)/e/[domain]/(settings)/permits';
 
 export async function getClientData(params: any, pageName: string | null): Promise<Metadata> {
   const {domain}: { domain: string } = params;

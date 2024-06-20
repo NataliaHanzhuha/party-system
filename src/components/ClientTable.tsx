@@ -48,7 +48,6 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
     const d = valueArr?.filter((item: Guest, idx: number) => valueArr?.indexOf(item) != idx)
       ?.concat({email: '1'});
     setIsDuplicate(d);
-    console.log(d, isDuplicate);
   }
 
   const resendEmail = async (guestId: string) => {
@@ -68,6 +67,11 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
       <Typography.Text copyable={{text: url}}>{isAdmin || forAll ? '' : `Copy ${title} Link`}</Typography.Text>
     </>);
   };
+
+  const domain: string = data?.name
+    ?.split(' ')
+    ?.map((word: string) => word.toLowerCase())
+    ?.join('-')
 
   const items: MenuProps['items'] = [
     {
@@ -103,7 +107,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
         <UnorderedListOutlined/>
         <RoledLink title={'Wishes List'}
                    forAll={true}
-                   url={wishUrl + '/list'}/>
+                   url={'/e/' + domain + '/wishes-list'}/>
       </Space>,
     },
     {
@@ -112,6 +116,10 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
         <FileExcelOutlined/>
         <span onClick={getEmailWIthGuests}>Get email with list of guests</span>
       </Space>,
+    },
+    {
+      key: 'publicPages',
+      label: <Link href={'/e/' + domain}>Public page</Link>
     }
   ];
 

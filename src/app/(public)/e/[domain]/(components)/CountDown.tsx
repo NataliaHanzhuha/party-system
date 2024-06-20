@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import style from '@/src/app/(public)/e/[domain]/(styles)/domain.module.css';
-import { ThemeType } from '@/src/app/(settings)/constant';
+import { ThemeType } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import useTheme from '@/src/app/(public)/e/[domain]/(hooks)/useTheme';
 
 interface CountdownProps {

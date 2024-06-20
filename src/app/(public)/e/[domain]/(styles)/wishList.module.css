@@ -40,3 +40,8 @@
   color: #3c6e71;
 }
 
+@media (max-width: 768px) {
+  .comment > * {
+    font-size: 16px !important;
+  }
+}

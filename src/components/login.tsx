@@ -7,13 +7,13 @@ import { Suspense, useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { Button, Form, Input, notification } from 'antd';
-
-const formSchema = z.object({
-  email: z.string().email({
-    message: 'Email is required.',
-  }),
-  password: z.string().nonempty({message: 'Password is required'}),
-});
+//
+// const formSchema = z.object({
+//   email: z.string().email({
+//     message: 'Email is required.',
+//   }),
+//   password: z.string().nonempty({message: 'Password is required'}),
+// });
 
 interface Login {
   email: string;
@@ -34,25 +34,24 @@ export default function Login({redirectPath, provider}: any) {
 
   useEffect(() => {
     if (session?.user) {
-      redirect('/clients');
+      redirect(redirectPath);
     }
   }, [session?.user]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const router = useRouter();
+
   const form = useForm<Login>({
-    resolver: zodResolver(formSchema),
+    // resolver: zodResolver(formSchema),
     defaultValues,
   });
-  if (!session) {
-    return 'empty';
-  }
 
-  const onSubmit = async (
-    values: z.infer<typeof formSchema>
-  ): Promise<void> => {
+  // if (!session) {
+  //   return 'empty';
+  // }
+
+  const onSubmit = async (values: any): Promise<void> => {
     setIsLoading(true);
-    const res = await signIn('admin', {
+    const res = await signIn(provider, {
       email: values.email,
       password: values.password,
       callbackUrl: `/`,
@@ -63,7 +62,7 @@ export default function Login({redirectPath, provider}: any) {
       setIsLoading(false);
     } else {
       await update({...values});
-      redirect('/clients');
+      redirect(redirectPath);
     }
   };
 
@@ -71,9 +70,7 @@ export default function Login({redirectPath, provider}: any) {
     return <>loading...</>;
   }
 
-  return (
-    <Suspense fallback={<>Loading...</>}>
-      <Form
+  return <Form
         name="basic"
         {...form}
         labelCol={{span: 8}}
@@ -107,7 +104,5 @@ export default function Login({redirectPath, provider}: any) {
           </Button>
         </Form.Item>
         {contextHolder}
-      </Form>
-    </Suspense>
-  );
+      </Form>;
 }

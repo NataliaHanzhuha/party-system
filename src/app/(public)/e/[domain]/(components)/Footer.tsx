@@ -1,4 +1,4 @@
-import { ThemeType } from '@/src/app/(settings)/constant';
+import { ThemeType } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import style from '@/src/app/(public)/e/[domain]/(styles)/domain.module.css';
 import useTheme from '@/src/app/(public)/e/[domain]/(hooks)/useTheme';
 

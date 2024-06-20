@@ -1,4 +1,4 @@
-import { metadata } from '@/src/app/(settings)/juneGuest';
+import { metadata } from '@/src/app/(public)/e/[domain]/(settings)/juneGuest';
 
 export interface IPermition {
   partySite: IPartyDetails | null;

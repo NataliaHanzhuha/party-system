@@ -1,6 +1,6 @@
 import style from '@/src/app/(public)/e/[domain]/(styles)/domain.module.css';
 import { dayAndMonth } from '@/src/app/(public)/e/[domain]/(helpers)/date-functions';
-import { ThemeType } from '@/src/app/(settings)/constant';
+import { ThemeType } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import RSVPButton from '@/src/app/(public)/e/[domain]/(components)/RSVPButton';
 import useTheme from '@/src/app/(public)/e/[domain]/(hooks)/useTheme';
 

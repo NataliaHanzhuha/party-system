@@ -13,7 +13,7 @@ import {
   ScheduleElement,
   SiteElement,
   SiteElementType
-} from '@/src/app/(settings)/constant';
+} from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import Banner from '@/src/app/(public)/e/[domain]/(components)/Banner';
 import About from '@/src/app/(public)/e/[domain]/(components)/About';
 import CallToAction from '@/src/app/(public)/e/[domain]/(components)/CallToAction';

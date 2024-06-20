@@ -8,7 +8,7 @@ import {
   SiteElement,
   SiteElementType,
   ThemeType
-} from '@/src/app/(settings)/constant';
+} from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { ReactNode } from 'react';
 import { dateAndTime } from '@/src/app/(public)/e/[domain]/(helpers)/date-functions';
 import { Client } from '@prisma/client';

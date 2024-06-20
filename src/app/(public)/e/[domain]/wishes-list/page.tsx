@@ -3,7 +3,7 @@
 import { Client, Wish } from '@prisma/client';
 import styles from '../(styles)/wishList.module.css';
 import { usePermition } from '@/src/app/(public)/e/[domain]/(hooks)/usePermition';
-import { PagesViews } from '@/src/app/(settings)/constant';
+import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
 import { Avatar, Empty, Flex, Typography } from 'antd';
 import useSWR from 'swr';

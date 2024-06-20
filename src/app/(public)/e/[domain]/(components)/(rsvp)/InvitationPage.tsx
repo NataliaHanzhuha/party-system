@@ -1,7 +1,7 @@
 'use client';
 
 import { usePermition } from '@/src/app/(public)/e/[domain]/(hooks)/usePermition';
-import { IRSVPDetails, PagesViews } from '@/src/app/(settings)/constant';
+import { IRSVPDetails, PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { RSVPForm } from '@/src/app/(public)/e/[domain]/(components)/(rsvp)/RSVPForm';
 import { useState } from 'react';
 import { IClientContext, useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';

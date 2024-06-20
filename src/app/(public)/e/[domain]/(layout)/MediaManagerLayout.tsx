@@ -8,11 +8,11 @@ import { fetcher, swrOptions } from '@/lib/auth/session';
 import { fromKebabToCapitalCase } from '@/src/utills/text-processing';
 import Loading from '@/src/app/(public)/e/[domain]/loading';
 import ErrorPage from '@/src/app/(public)/e/[domain]/error';
-import { emptyPermission, permissions } from '@/src/app/(settings)/permits';
+import { emptyPermission, permissions } from '@/src/app/(public)/e/[domain]/(settings)/permits';
 import Link from 'next/link';
 import useDevMode from '@/src/app/(public)/e/[domain]/(hooks)/useDevMode';
 import { IClient } from '@/types/types';
-import { IPermition } from '@/src/app/(settings)/constant';
+import { IPermition } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 
 const {Footer, Content, Header} = Layout;
 
