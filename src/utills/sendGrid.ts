@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { Client, Guest } from '@prisma/client';
 import { MailDataRequired } from '@sendgrid/helpers/classes/mail';
 import { deleteExcelFile } from '@/src/utills/excel-processing';
+import { IClient } from '@/types/types';
 
 export const sendManyEmails = async (emails: any, templateId: string) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
@@ -21,11 +22,14 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
     templateId: templateId
   };
 
-  console.log(emails, msg);
   sendManyEmailsRequest(msg);
 };
 
-export const sendNewGuestEvent = async (client: Client, guest: Guest) => {
+export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
+  if (!client?.invitationEmailId) {
+    return NextResponse.json(guest);
+  }
+
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   const url = process.env.NEXTAUTH_URL;
   const msg: MailDataRequired = {

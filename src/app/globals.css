@@ -1,4 +1,11 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/*:root {*/
+/*  --textColor: black;*/
+/*  --bgColor: white;*/
+/*  --bgOpacity: .18;*/
+/*  --laptopWidth: 940px;*/
+/*  --mobileWidth: 540px;*/
+/*}*/
 
 html, body {
   margin: 0;
@@ -9,6 +16,24 @@ html, body {
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/*.dark {*/
+/*  --bgColor: black;*/
+/*  --textColor: white;*/
+/*  --bgOpacity: .18;*/
+/*}*/
+
+/*.light {*/
+/*  --textColor: black;*/
+/*  --bgColor: white;*/
+/*  --bgOpacity: .35;*/
+/*}*/
+
+/*.red {*/
+/*  --textColor: red;*/
+/*  --bgColor: #9ad79a;*/
+/*  --bgOpacity: .35;*/
+/*}*/
 
 .wrapper {
   position: relative;

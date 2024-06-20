@@ -24,7 +24,7 @@ export default function Page({}) {
               style={{width: '100%'}}>
           <Typography.Title level={3}
                             style={{color: 'white'}}>Party System</Typography.Title>
-          <Link href="/celebrant/login">
+          <Link href="/(protected)/celebrant/login">
             <Button>Celebrant Login</Button>
           </Link>
         </Flex>

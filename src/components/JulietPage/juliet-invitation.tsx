@@ -109,6 +109,6 @@ export default function JulietInvitation({data}: any) {
     : isSavedGuest
       ? finalTmpl(data?.client?.name, data?.client?.id)
       : !data?.id ? firstFormView : formTmp;
-  console.log('juliet');
+
   return <CustomThemeWrapper>{view}</CustomThemeWrapper>;
 }

@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
   const client: any = await db.client.findUnique({where: {id: clientId}});
   const isExistGuest: any | null = await db.guest.findFirst({where: {email}});
 
+  console.log(clientId, name, email);
   if (isExistGuest?.id) {
     if (isExistGuest.status === 'REJECTED') {
       await db.guest.delete({where: {email, id: isExistGuest.id}});
@@ -40,14 +41,22 @@ export async function POST(request: NextRequest) {
         data: {name, clientId, email, extraPerson1, status: 'NEW'},
       });
 
-      return await sendNewGuestEvent(client, guest);
+      if (!guest) {
+        return NextResponse.error();
+      }
+
+      return await sendNewGuestEvent(client, guest as Guest);
     } else {
       const guest = await db.guest.update({
         where: {id: isExistGuest?.id, clientId},
         data: {name, email, extraPerson1, status: 'EDITED'},
       });
 
-      return await sendNewGuestEvent(client, guest);
+      if (!guest) {
+        return NextResponse.error();
+      }
+
+      return await sendNewGuestEvent(client, guest as Guest);
     }
   }
 

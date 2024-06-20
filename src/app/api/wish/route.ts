@@ -20,5 +20,5 @@ export async function GET(request: NextRequest) {
       wishes: true
     }
   });
-  return NextResponse.json(wishes ?? []);
+  return NextResponse.json(wishes?.wishes ?? []);
 }

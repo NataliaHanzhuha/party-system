@@ -4,8 +4,7 @@ import { Client, Guest } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');
-  const domain: string | null = request.nextUrl.searchParams.get('domain');
-  console.log(id);
+  const name: string | null = request.nextUrl.searchParams.get('name');
 
   const include = {
     guests: true,
@@ -22,13 +21,13 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(client);
-  } else if (domain) {
+  } else if (name) {
     const client = await db.client.findFirst({
-      where: {name: domain}, include
+      where: {name}, include
     });
 
     if (!client) {
-      return NextResponse.json('No client with id: ' + id, {status: 404});
+      return NextResponse.error();
     }
 
     return NextResponse.json(client);
