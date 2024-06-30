@@ -67,12 +67,17 @@ export const firstFormReject = (name: string, id: string) => <div className={sty
           href={`../../${id}/wishes`}> HERE</Link></span>
 </div>;
 
-export const firstForm = (
+export const rsvpFinishedBanner = (name: string) => <div className={styles.notification}>
+  <h3>Sorry, RSVP for {name}&#39;s party has already finished.</h3>
+  <p>Thank you for your time</p>
+</div>;
+
+  export const firstForm = (
   message: string,
   confirm: () => void,
   cancel: () => void,
   extra?: any
-) => <div className={styles.firstFormWrapper}>
+  ) => <div className={styles.firstFormWrapper}>
   <h2 className={styles.heading}>{message}</h2>
 
   {extra}
@@ -90,4 +95,4 @@ export const firstForm = (
   </Flex>
 </div>;
 
-export const positiveCancelAnswer = <div className={styles.notification}>Your Reservation is now cancelled.</div>;
+  export const positiveCancelAnswer = <div className={styles.notification}>Your Reservation is now cancelled.</div>;

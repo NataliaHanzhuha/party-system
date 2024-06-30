@@ -13,5 +13,7 @@ export async function getClientData(params: any, pageName: string | null): Promi
     throw Error('Not Found this Celebrant');
   }
 
-  return permissions[client?.id].metadata(pageName ?? client.name + ' Party', client);
+  console.log(domain, clientName, 'getClientData');
+
+  return client?.settings?.metadata;
 }

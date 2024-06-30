@@ -1,3 +1,5 @@
+import { IPermition } from '@/src/app/(public)/e/[domain]/(settings)/constant';
+
 export enum PageView {
   DEFAULT,
   JULIETPAGE
@@ -16,6 +18,7 @@ export interface IClient {
   guests: any[];
   wishes: any[];
   invitationEmailId: string;
+  settings: IPermition;
 }
 
 export interface IGuest {

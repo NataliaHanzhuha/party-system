@@ -20,19 +20,20 @@ import CallToAction from '@/src/app/(public)/e/[domain]/(components)/CallToActio
 import CountDown from '@/src/app/(public)/e/[domain]/(components)/CountDown';
 import Footer from '@/src/app/(public)/e/[domain]/(components)/Footer';
 import Schedule from '@/src/app/(public)/e/[domain]/(components)/Schedule';
+import { wishFormPath } from '@/src/app/router';
 
 const checkIfRSVPAvialible = (rsvpFinish: Date): boolean => {
   const now = Date.now();
-  return now < rsvpFinish.getTime();
+  return now < new Date(rsvpFinish)?.getTime();
 };
 
 export default function EventPage({params}: any) {
   const {domain} = params;
   const client: any = useClientContext();
-  const site: IPartyDetails = usePermition(PagesViews.PARTY_SITE);
+  const site: IPartyDetails = usePermition(PagesViews.PARTY_SITE, client?.settings);
 
   const rsvpLink: string | null = checkIfRSVPAvialible(site.rsvpFinish)
-    ? `${window.location.origin}/e/${domain}/wish-form`
+    ? `${window.location.origin}${wishFormPath(domain)}`
     : null;
 
   return <div className={style.website}>
@@ -44,12 +45,12 @@ export default function EventPage({params}: any) {
                          key={key}
                          mode={(element as SiteElement).mode}
                          url={(element as BannerElement).imageUrl}
-                         date={site.partyDate}/>;
+                         date={new Date(site.partyDate)}/>;
         }
 
         case SiteElementType.About: {
           return <About name={client.name}
-                        date={site.partyDate}
+                        date={new Date(site.partyDate)}
                         mode={(element as SiteElement).mode}
                         details={(element as AboutElement).details}
                         key={key}
@@ -58,14 +59,14 @@ export default function EventPage({params}: any) {
         }
 
         case SiteElementType.CallToAction: {
-          return <CallToAction date={site.partyDate}
+          return <CallToAction date={new Date(site.partyDate)}
                                key={key}
                                mode={(element as SiteElement).mode}
                                rsvpLink={rsvpLink}/>;
         }
 
         case SiteElementType.CountDown: {
-          return <CountDown date={site.partyDate}
+          return <CountDown date={new Date(site.partyDate)}
                             key={key}
                             mode={(element as SiteElement).mode}/>;
         }

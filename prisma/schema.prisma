@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  seed    = "prisma/seed.ts"
 }
 
 datasource db {
@@ -10,22 +9,23 @@ datasource db {
 }
 
 model Client {
-  id                     String                @id @default(cuid())
-  name                   String
-  email                  String
-  invitationPage         InvitationPageEnum?   @default(DEFAULT)
-  invitationEmailId      String? @ignore
-  EmailTemplateDetailsId Int?
-  EmailTemplateDetails   EmailTemplateDetails? @relation(fields: [EmailTemplateDetailsId], references: [id])
-  guests                 Guest[]
-  wishes                 Wish[]
+  id                String              @id @default(cuid())
+  name              String
+  email             String
+  invitationEmailId String?             @ignore
+  invitationPage    InvitationPageEnum? @default(DEFAULT)
+  // EmailTemplateDetailsId Int?
+  // EmailTemplateDetails   EmailTemplateDetails? @relation(fields: [EmailTemplateDetailsId], references: [id])
+  guests            Guest[]
+  wishes            Wish[]
+  settings          Json?               @db.Json
 }
 
 model EmailTemplateDetails {
-  id                Int      @id @default(autoincrement())
+  id                Int     @id @default(autoincrement())
   mediaEmailId      String?
   invitationEmailId String?
-  Client            Client[]
+  // Client            Client[]
 }
 
 model Guest {

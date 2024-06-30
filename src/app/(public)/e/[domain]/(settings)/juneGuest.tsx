@@ -2,7 +2,7 @@ import {
   AboutElement,
   BannerElement,
   IPartyDetails,
-  IRSVPDetails, LS_ClientName,
+  IRSVPDetails,
   ScheduleElement,
   ScheduleItem,
   SiteElement,
@@ -11,8 +11,6 @@ import {
 } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { ReactNode } from 'react';
 import { dateAndTime } from '@/src/app/(public)/e/[domain]/(helpers)/date-functions';
-import { Client } from '@prisma/client';
-import dynamic from 'next/dynamic';
 
 export const aboutDetails = '      <p>Enter your event description here...Pellentesque ullamcorper tortor ut auctor consequat. Nullam sed nisi massa. Aliquam eget\n' +
   '           enim nunc. Praesent blandit blandit ornare. Sed lacinia felis quis elit luctus, et tincidunt elit aliquam. Sed porttitor eros\n' +
@@ -77,27 +75,24 @@ export const RSVPDetails: IRSVPDetails = {
   details: partyDetails(),
   mode: ThemeType.dark,
   url,
+  allowedWishes: false,
+  templateId: 'd-b914ec82275540e28d3bdffa31a0ae5d'
 };
 
-export const metadata = (pageName: any, client: any) => {
-  const name = client?.name ?? 'Celebrant';
-
-  return {
-    title: pageName,
-    description: `${pageName} site for ${name} Party Guests`,
-    icons: {
-      icon: './favicon.ico',
+export const metadata = {
+  description: `Site for Jule Guest Party Guests`,
+  icons: {
+    icon: 'https://firebasestorage.googleapis.com/v0/b/dad-birthday-party.appspot.com/o/party-system%2Ffavicon.ico?alt=media&token=fa575cdb-1bf5-46b8-9506-2092bfb35a95',
+  },
+  openGraph: {
+    description: `Here all friends of Jule Guest could leave their data for party invitation`,
+    images: {
+      url: `https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.jinyc-photo.com%2Fnyc-party-photography&psig=AOvVaw35q0rujZdkT1us0XrMf7Fv&ust=1718288022390000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLi5lfif1oYDFQAAAAAdAAAAABAE`,
+      width: '800',
+      height: '500'
     },
-    openGraph: {
-      description: `Here all friends of ${name} could leave their data for party invitation`,
-      images: {
-        url: `https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.jinyc-photo.com%2Fnyc-party-photography&psig=AOvVaw35q0rujZdkT1us0XrMf7Fv&ust=1718288022390000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLi5lfif1oYDFQAAAAAdAAAAABAE`,
-        width: '800',
-        height: '500'
-      },
-      locale: 'en_US',
-      type: 'website',
-      siteName: pageName
-    }
-  };
+    locale: 'en_US',
+    type: 'website',
+    siteName: 'Party System'
+  }
 };

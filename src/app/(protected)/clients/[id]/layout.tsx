@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function generateMetadata({params}: any): Promise<Metadata> {
   const {id} = params;
-
+  console.log(id);
   const client: any = await axios.get(process.env.NEXTAUTH_URL + '/api/client?id=' + id)
     .then(res => res.data);
   return {

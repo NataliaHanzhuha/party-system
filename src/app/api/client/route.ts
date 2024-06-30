@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
   const include = {
     guests: true,
     wishes: true,
-    EmailTemplateDetails: true
   }
 
   if (id) {
@@ -22,16 +21,15 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(client);
   } else if (name) {
-    const client = await db.client.findFirst({
-      where: {name}, include
-    });
+    const client = await db.client
+      .findFirst({where: {name}, include});
 
     if (!client) {
       return NextResponse.error();
     }
 
     return NextResponse.json(client);
-  } else{
+  } else {
     const clients = await db.client.findMany();
     return NextResponse.json(clients ?? []);
   }
@@ -57,7 +55,7 @@ export async function PUT(request: NextRequest) {
 
   const client = await db.client.update({
     where: {id: id!},
-    data: {name, email, invitationPage, EmailTemplateDetailsId: templateId},
+    data: {name, email, invitationPage},
   });
 
   return NextResponse.json(client);

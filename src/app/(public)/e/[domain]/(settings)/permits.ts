@@ -6,26 +6,26 @@ import { Client } from '@prisma/client';
 
 export const permissions: { [id: string]: IPermition } = {
   //test
-  'clxb7eyd4000030o06ijicxv8': { //-2
+  'clxb7eyd4000030o06ijicxv8': {
     partySite: PartyDetails,
     rsvp: RSVPDetails,
-    mediaManagement: true,
+    mediaManagement: 'd-b914ec82275540e28d3bdffa31a0ae5d',
     wishes: true,
     metadata
   },
 
   //prod
-  'clvy6n0i90000s2841pehgpmh': { // -1
+  'clvy6n0i90000s2841pehgpmh': { // -1 test
     partySite: PartyDetails,
     rsvp: RSVPDetails,
-    mediaManagement: true,
+    mediaManagement: null,
     wishes: true,
     metadata
   },
   'clvoirrc20001s1i5mza4a9h8': { // 0
     partySite: null,
     rsvp: null,
-    mediaManagement: false,
+    mediaManagement: null,
     wishes: true,
     metadata
   }
@@ -34,7 +34,7 @@ export const permissions: { [id: string]: IPermition } = {
 export const emptyPermission: IPermition = {
   partySite: null,
   rsvp: null,
-  mediaManagement: false,
+  mediaManagement: null,
   wishes: false,
   metadata
 };

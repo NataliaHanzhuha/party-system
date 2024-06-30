@@ -13,6 +13,7 @@ import Link from 'next/link';
 import useDevMode from '@/src/app/(public)/e/[domain]/(hooks)/useDevMode';
 import { IClient } from '@/types/types';
 import { IPermition } from '@/src/app/(public)/e/[domain]/(settings)/constant';
+import { mediaPath } from '@/src/app/router';
 
 const {Footer, Content, Header} = Layout;
 
@@ -76,17 +77,15 @@ export function LayoutWrapper({children, params}: ILayoutWrapper) {
     permition: permissions[client?.id] ?? emptyPermission
   };
 
-  const path = '/e/' + domain;
-
   return <ConfigProvider theme={themeData}>
     <Layout className={styles.layout}>
       {/*{isDev && <Header className={styles.header}>*/}
       {/*  <Flex gap="middle" align="center" wrap='wrap'>*/}
       {/*    <Typography.Title level={4} style={{color: 'white', margin: 0}}>Dev header</Typography.Title>*/}
-      {/*    <Link key='1' href={path}>Party Site</Link>*/}
-      {/*    <Link key='2' href={path + '/rsvp'}>RSVP</Link>*/}
-      {/*    <Link key='4' href={path + '/wishes-list'}>Wishes List</Link>*/}
-      {/*    <Link key='3' href={path + '/media-management'}>Media</Link>*/}
+      {/*    <Link key='1' href={partySitePath}>Party Site</Link>*/}
+      {/*    <Link key='2' href={rsvpPath}>RSVP</Link>*/}
+      {/*    <Link key='4' href={wishesListPath}>Wishes List</Link>*/}
+      {/*    <Link key='3' href={mediaPath}>Media</Link>*/}
       {/*  </Flex>*/}
       {/*</Header>}*/}
 

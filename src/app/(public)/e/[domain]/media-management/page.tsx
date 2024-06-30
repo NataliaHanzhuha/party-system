@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Typography } from 'antd';
 import MediaForm from '@/src/app/(public)/e/[domain]/(components)/MediaForm';
 import { useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
-import { Client } from '@prisma/client';
 import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { usePermition } from '@/src/app/(public)/e/[domain]/(hooks)/usePermition';
 
@@ -14,9 +13,9 @@ const {Title, Text} = Typography;
 
 export default function Page() {
   const client: any = useClientContext();
-  const [isSent, setSent] = useState(false);
+  const permition = usePermition(PagesViews.MEDIA_MANAGEMENT, client?.settings);
 
-  usePermition(PagesViews.MEDIA_MANAGEMENT);
+  const [isSent, setSent] = useState(false);
 
   return <div className={styles.mediaWrapper}>
     <Title level={1}>Media Management</Title>

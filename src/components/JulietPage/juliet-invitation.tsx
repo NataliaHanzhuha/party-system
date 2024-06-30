@@ -4,7 +4,14 @@ import { Form } from 'antd';
 import { useState } from 'react';
 import styles from './juliet-invitation.module.css';
 import { Guest } from '@prisma/client';
-import { CustomThemeWrapper, finalTmpl, firstForm, firstFormReject, positiveCancelAnswer } from '@/src/components/JulietPage/elements';
+import {
+  CustomThemeWrapper,
+  finalTmpl,
+  firstForm,
+  firstFormReject,
+  positiveCancelAnswer,
+  rsvpFinishedBanner
+} from '@/src/components/JulietPage/elements';
 import { InvitationForm } from '@/src/components/ui/InvitationForm';
 
 // interface SubmitButtonProps {
@@ -83,6 +90,7 @@ export default function JulietInvitation({data}: any) {
     clientId: data?.client?.id,
     id: data?.id ?? null
   };
+  const endOfRSVP = new Date(2024, 6, 1);
   const [form] = Form.useForm();
   const [agreedForRSVP, isAgreed] = useState<boolean | null>(null);
   const [isSavedGuest, setSavedGuest] = useState<Guest | null>(null);
@@ -96,6 +104,12 @@ export default function JulietInvitation({data}: any) {
                     styles={styles}
                     saved={(guest: Guest) => setSavedGuest(guest)}/>
   </div>;
+
+  if (!data?.id && endOfRSVP.getTime() <= Date.now()) {
+    return <CustomThemeWrapper>
+      {rsvpFinishedBanner(data?.client?.name)}
+    </CustomThemeWrapper>
+  }
 
   const firstFormView = agreedForRSVP === null
     ? firstForm(message, () => isAgreed(true), () => isAgreed(false),

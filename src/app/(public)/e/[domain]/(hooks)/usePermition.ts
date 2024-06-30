@@ -1,19 +1,16 @@
-import { IPermitionContext, usePermitionContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
-import { IPartyDetails, IPermition, PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
+import { IPermition } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { redirect } from 'next/navigation';
 
-export function usePermition(name: string): any {
-  let {permition}: IPermitionContext = usePermitionContext();
-
-  if (!permition) {
+export function usePermition(name: string, settings?: IPermition): any {
+  if (!settings) {
     redirect('/');
   }
 
-  permition = permition as IPermition;
-
-  if (permition && !permition[name]) {
+  if (settings && !settings[name]) {
     redirect('/');
   }
 
-  return permition[name];
+  if (settings && settings[name]) {
+    return settings[name];
+  }
 }

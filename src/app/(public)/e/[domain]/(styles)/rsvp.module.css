@@ -37,12 +37,13 @@
   flex-direction: column;
   text-align: center;
   padding: 100px 15px;
-  background-color: #ffffff91;
+  background-color: #ffffffa3;
   margin: 0 auto;
   max-width: var(--laptopWidth);
   width: 90%;
   color: black;
   gap: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 768px) {

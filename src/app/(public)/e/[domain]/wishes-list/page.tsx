@@ -24,7 +24,7 @@ const colors = [
 export default function WishList() {
   const client: any = useClientContext();
 
-  usePermition(PagesViews.WISHES);
+  usePermition(PagesViews.WISHES, client.settings);
 
   const {data, error, isLoading} = useSWR('/api/wish?clientId=' + client.id, fetcher, swrOptions);
 

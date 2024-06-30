@@ -13,10 +13,10 @@
     "gen:dev": "dotenv -e .env prisma generate",
     "reset:prod": "dotenv -e .env.development.local prisma reset",
     "lint": "next lint",
-    "data-migration:add-status-column": "ts-node ./prisma/migrations/20240429191004_test/data-migration.ts"
-  },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "save": "ts-node --esm prisma/save-local.ts",
+    "seed": "ts-node --esm prisma/seed.ts",
+    "save:prod": "ts-node --esm dotenv -e .env.development.local prisma/save-local.ts",
+    "seed:prod": "dotenv -e .env.development.local ts-node --esm prisma/seed.ts"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
@@ -54,5 +54,6 @@
     "prisma": "^5.13.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
-  }
+  },
+  "type": "module"
 }

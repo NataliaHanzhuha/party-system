@@ -2,7 +2,7 @@ import { metadata } from '@/src/app/(public)/e/[domain]/(settings)/juneGuest';
 
 export interface IPermition {
   partySite: IPartyDetails | null;
-  mediaManagement: boolean;
+  mediaManagement: string | null;
   wishes: boolean;
   rsvp: IRSVPDetails | null;
   metadata: any;
@@ -24,6 +24,8 @@ export interface IRSVPDetails {
   details: any;
   mode: ThemeType;
   url: string;
+  allowedWishes: boolean;
+  templateId: string;
 }
 
 export type Elements = SiteElement | BannerElement | AboutElement | ScheduleElement;

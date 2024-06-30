@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import styles from '../(styles)/mm.module.css';
 import axios from 'axios';
 import { useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
+import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
+import { useEffect, useState } from 'react';
 
 const initialValue = {
   name: '',
@@ -12,16 +13,15 @@ const initialValue = {
 };
 
 export default function MediaForm({sent}) {
+  const client = useClientContext();
 
   const [form] = Form.useForm();
   const values = Form.useWatch([], form);
 
-  const [submittable, setSubmittable] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  const [submittable, setSubmittable] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const client = useClientContext();
-
-  React.useEffect(() => {
+  useEffect(() => {
     form
       .validateFields({ validateOnly: true, dirty: true })
       .then(() => setSubmittable(false))
@@ -31,7 +31,7 @@ export default function MediaForm({sent}) {
   const saveNewGuest = async () => {
     setLoading(true);
     const guest = await axios.post(
-      '/api/guest?clientId=' + client?.id, form.getFieldsValue());
+      `/api/guest?clientId=${client?.id}&type=${PagesViews.MEDIA_MANAGEMENT}`, form.getFieldsValue());
     sent(true);
   };
 

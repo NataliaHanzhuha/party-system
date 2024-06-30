@@ -23,6 +23,9 @@ import { Roles } from '@/types/types';
 import { useState } from 'react';
 import { fetcher } from '@/lib/auth/session';
 import { usePathname } from 'next/navigation';
+import { mediaPath, partySitePath, rsvpPath, wishesListPath, wishFormPath } from '@/src/app/router';
+import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
+import { emptyPermission } from '@/src/app/(public)/e/[domain]/(settings)/permits';
 
 
 export default function ClientTable({id, role, host}: { id: string, role: Roles, host: string }) {
@@ -57,9 +60,14 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
       : messageApi.error('Request failed');
   };
 
+  console.log(emptyPermission);
+  const domain: string = data?.name
+    ?.split(' ')
+    ?.map((word: string) => word.toLowerCase())
+    ?.join('-');
   const isAdmin = role === Roles.Admin;
   const invitationUrl = host + `/${id}/invitation`;
-  const wishUrl = host + `/${data?.id}/wishes`;
+  const wishUrl = host + wishFormPath(domain);
 
   const RoledLink = ({title, url, forAll = false}: { title: string, url: string, forAll?: boolean }) => {
     return (<>
@@ -68,17 +76,13 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
     </>);
   };
 
-  const domain: string = data?.name
-    ?.split(' ')
-    ?.map((word: string) => word.toLowerCase())
-    ?.join('-')
 
   const items: MenuProps['items'] = [
     {
       key: '3',
       label: <Space>
         <UserAddOutlined/>
-        <RoledLink title={'Guest Invitation'}
+        <RoledLink title={'Old Guest Invitation'}
                    url={invitationUrl}/>
       </ Space>
     },
@@ -101,26 +105,53 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
     {
       type: 'divider',
     },
-    {
-      key: '1',
-      label: <Space>
-        <UnorderedListOutlined/>
-        <RoledLink title={'Wishes List'}
-                   forAll={true}
-                   url={'/e/' + domain + '/wishes-list'}/>
-      </Space>,
-    },
+
     {
       key: '2',
       label: <Space>
         <FileExcelOutlined/>
-        <span onClick={getEmailWIthGuests}>Get email with list of guests</span>
+        <span onClick={getEmailWIthGuests}>Send email with list of guests</span>
       </Space>,
     },
     {
+      type: 'divider',
+    },
+    {
       key: 'publicPages',
-      label: <Link href={'/e/' + domain}>Public page</Link>
-    }
+      disabled: !data?.settings[PagesViews.PARTY_SITE],
+      label: <Link href={partySitePath(domain)}>Party Site</Link>
+    },
+    {
+      key: 'wishesList',
+      disabled: !data?.settings[PagesViews.WISHES],
+      label: <Space>
+        <UnorderedListOutlined/>
+        <RoledLink title={'Wishes List'}
+                   forAll={true}
+                   url={wishesListPath(domain)}/>
+      </Space>,
+    },
+    {
+      key: 'rsvp',
+      disabled: !data?.settings[PagesViews.RSVP],
+      label: <Space>
+        <UserAddOutlined/>
+        <RoledLink title={'RSVP'}
+                   url={rsvpPath(domain)}/>
+      </ Space>
+    },
+    {
+      key: 'media',
+      disabled: !data?.settings[PagesViews.MEDIA_MANAGEMENT],
+      label: <Space>
+        <UserAddOutlined/>
+        <RoledLink title={'Media Management'}
+                   url={mediaPath(domain)}/>
+      </ Space>
+    },
+    {
+      type: 'divider',
+    },
   ];
 
   const infoOption: any = {

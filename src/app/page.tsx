@@ -2,6 +2,7 @@
 
 import { Button, Flex, Layout, Typography } from 'antd';
 import Link from 'next/link';
+import { permissions } from '@/src/app/(public)/e/[domain]/(settings)/permits';
 
 export default function Page({}) {
   return (
@@ -24,7 +25,7 @@ export default function Page({}) {
               style={{width: '100%'}}>
           <Typography.Title level={3}
                             style={{color: 'white'}}>Party System</Typography.Title>
-          <Link href="/(protected)/celebrant/login">
+          <Link href={'/celebrant/login'}>
             <Button>Celebrant Login</Button>
           </Link>
         </Flex>
@@ -52,21 +53,22 @@ export default function Page({}) {
                               style={{color: 'white'}}>Welcome to Party System!</Typography.Title>
             <Typography.Title level={3}
                               style={{color: 'darkgrey'}}>We can give you rsvp or media guests </Typography.Title>
+            <p style={{color: 'white'}}>Coming soon...</p>
 
           </Flex>
 
-          <div className={'wrapper'}>
-            <iframe loading="lazy"
-                    className={'frame'}
-                    src="https://www.canva.com/design/DAGFIruX6nM/bVNcpqqApYOplIo_Rrt83g/view?embed"
-                    allow="fullscreen">
-            </iframe>
-          </div>
+          {/*<div className={'wrapper'}>*/}
+          {/*  <iframe loading="lazy"*/}
+          {/*          className={'frame'}*/}
+          {/*          src="https://www.canva.com/design/DAGFIruX6nM/bVNcpqqApYOplIo_Rrt83g/view?embed"*/}
+          {/*          allow="fullscreen">*/}
+          {/*  </iframe>*/}
+          {/*</div>*/}
         </Flex>
       </Layout.Content>
 
       <Layout.Footer style={{textAlign: 'center', justifySelf: 'end', gap: '10px', background: 'black'}}>
-        <span style={{color: 'white'}}> Ant Design ©{new Date().getFullYear()} Created by Ant UED</span>
+        <span style={{color: 'white'}}> Ant Design ©{new Date().getFullYear()} Created by Party System</span>
         <Link href="/login">
           <Button type={'link'}>Admin Login</Button>
         </Link>

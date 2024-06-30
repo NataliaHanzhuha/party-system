@@ -4,14 +4,13 @@ import { usePermition } from '@/src/app/(public)/e/[domain]/(hooks)/usePermition
 import { IRSVPDetails, PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 import { RSVPForm } from '@/src/app/(public)/e/[domain]/(components)/(rsvp)/RSVPForm';
 import { useState } from 'react';
-import { IClientContext, useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
+import { useClientContext } from '@/src/app/(public)/e/[domain]/(layout)/MediaManagerLayout';
 import styles from '@/src/app/(public)/e/[domain]/(styles)/rsvp.module.css';
 import { finalTmpl, firstForm, firstFormReject, positiveCancelAnswer } from '@/src/app/(public)/e/[domain]/(components)/(rsvp)/elements';
 import { Form, Typography } from 'antd';
 import { GuestStatus, IClient, IGuest, } from '@/types/types';
 import { dayAndMonth } from '@/src/app/(public)/e/[domain]/(helpers)/date-functions';
 import useTheme from '@/src/app/(public)/e/[domain]/(hooks)/useTheme';
-import style from '@/src/app/(public)/e/[domain]/(styles)/domain.module.css';
 
 interface IRSVPPage {
   data?: IGuest;
@@ -20,7 +19,7 @@ interface IRSVPPage {
 
 export default function InvitationPage({data, domain}: IRSVPPage) {
   let client: any = useClientContext();
-  let permission: any = usePermition(PagesViews.RSVP);
+  let permission: any = usePermition(PagesViews.RSVP, client?.settings);
   const theme = useTheme(permission.mode);
 
   permission = permission as IRSVPDetails;
@@ -34,10 +33,9 @@ export default function InvitationPage({data, domain}: IRSVPPage) {
     id: data?.id ?? null
   };
   const [form] = Form.useForm();
-  const [agreedForRSVP, isAgreed] = useState<boolean | null>(true);
-  const [isSavedGuest, setSavedGuest] = useState<IGuest | null>({} as any);
+  const [agreedForRSVP, isAgreed] = useState<boolean | null>(null);
+  const [isSavedGuest, setSavedGuest] = useState<IGuest | null>(null);
   const title = `${client?.name} ${permission.title} (${dayAndMonth(permission.partyDate)})`;
-  const message = `You are cordially Invited to ${title}`;
 
   const formTmp = <div className={styles.container}>
     <Typography.Title level={3}>{title}</Typography.Title>
@@ -49,19 +47,26 @@ export default function InvitationPage({data, domain}: IRSVPPage) {
   </div>;
 
   const firstFormView = agreedForRSVP === null
-    ? firstForm(message, () => isAgreed(true), () => isAgreed(false),
+    ? firstForm(
+      <>
+        <div>You are cordially Invited to {client?.name} {permission.title}</div>
+        <i>({dayAndMonth(permission.partyDate)})</i>
+      </>,
+      () => isAgreed(true),
+      () => isAgreed(false),
       <Typography.Title level={4}>Do you want to RSVP?</Typography.Title>)
     : agreedForRSVP
       ? formTmp
-      : firstFormReject(client!.name, domain);
+      : firstFormReject(client!.name, domain, permission.allowedWishes);
 
   const view = data?.status === GuestStatus.REJECTED
     ? positiveCancelAnswer
     : isSavedGuest
-      ? finalTmpl(client!.name, domain, permission.details)
+      ? finalTmpl(client!.name, domain, permission.details, permission.allowedWishes)
       : !data?.id ? firstFormView : formTmp;
 
-  return <div className={`${styles.page} ${theme}`} style={{backgroundImage: `url(${permission.url})`}}>
+  return <div className={`${styles.page} ${theme}`}
+              style={{backgroundImage: `url(${permission.url})`}}>
     <div className={'bg'}></div>
     {view}
   </div>;

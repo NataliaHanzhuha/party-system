@@ -25,7 +25,7 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
   sendManyEmailsRequest(msg);
 };
 
-export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
+export const sendNewGuestEvent = async (client: IClient, guest: Guest, templateId: string | null = 'd-b914ec82275540e28d3bdffa31a0ae5d') => {
   if (!client?.invitationEmailId) {
     return NextResponse.json(guest);
   }
@@ -83,11 +83,11 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
     from: 'nataliiahanzhuha@gmail.com',
     subject: 'Party guest list',
     personalizations: [{
-      to: {email: client.email},
+      to: {email: 'nataliiahanzhuha@gmail.com'}, //client.email},
       bcc: {email: 'daaremu@gmail.com'},
       cc: {email: 'nataliiahanzhuhawork@gmail.com'},
     }],
-    text: `Hi, ${client.name}. I attached excel file with list of your party guests bellow.`,
+    text: `Hi, ${client.name}. I attached Excel file with list of your party guests bellow. Also, you can find list of your wishes here: https://party-system-rsvp.vercel.app/e/juliet-ogbu/wishes-list`,
     attachments: [
       {
         content: attachment,

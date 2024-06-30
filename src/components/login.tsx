@@ -62,7 +62,7 @@ export default function Login({redirectPath, provider}: any) {
       setIsLoading(false);
     } else {
       await update({...values});
-      redirect(redirectPath);
+      // redirect(redirectPath);
     }
   };
 

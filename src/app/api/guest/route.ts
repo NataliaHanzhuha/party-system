@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
 import { Guest } from '@prisma/client';
 import { sendNewGuestEvent } from '@/src/utills/sendGrid';
+import { PageView } from '@/types/types';
+import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');
@@ -28,6 +30,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const clientId: string = request.nextUrl.searchParams.get('clientId')!;
+  const type: string = request.nextUrl.searchParams.get('type')!;
   const {name, email, extraPerson1} = await request.json();
   const client: any = await db.client.findUnique({where: {id: clientId}});
   const isExistGuest: any | null = await db.guest.findFirst({where: {email}});
@@ -56,7 +59,19 @@ export async function POST(request: NextRequest) {
         return NextResponse.error();
       }
 
-      return await sendNewGuestEvent(client, guest as Guest);
+
+      if (type === PagesViews.MEDIA_MANAGEMENT) {
+        return NextResponse.json({message: 'Guest saved'});
+        // templateId = client.settings[PagesViews.MEDIA_MANAGEMENT];
+      }
+
+      let templateId: string | null = null;
+
+      if (type === PagesViews.RSVP) {
+        templateId = client.settings[PagesViews.RSVP]?.templateId;
+      }
+
+      return await sendNewGuestEvent(client, guest as Guest, templateId);
     }
   }
 
