@@ -8,14 +8,14 @@ export async function GET(request: NextRequest) {
 
   const client = await db.client.findUnique({
     where: {id},
-    include: {guests: true}
+    include: {guests: true, wishes: true}
   });
 
   if (!client) {
     return NextResponse.error();
   }
 
-  const filePath = await excelDoc(client?.guests, client);
+  const filePath = await excelDoc(client?.guests, client, client?.wishes);
   return await sendEmailWithGuestsList(client, filePath);
   // return  NextResponse.json(null);
 }

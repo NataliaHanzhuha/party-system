@@ -81,13 +81,19 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
   const attachment = fs.readFileSync(pathToAttachment).toString('base64');
   const msg = {
     from: 'nataliiahanzhuha@gmail.com',
-    subject: 'Party guest list',
+    subject: 'Party Guest List',
     personalizations: [{
-      to: {email: 'nataliiahanzhuha@gmail.com'}, //client.email},
+      to: {email: client.email},
       bcc: {email: 'daaremu@gmail.com'},
       cc: {email: 'nataliiahanzhuhawork@gmail.com'},
+      dynamicTemplateData: {
+        name: client?.name,
+        wishesLink: 'https://party-system-rsvp.vercel.app/e/juliet-ogbu/wishes-list',
+        personalText: 'Thank you for engaging us to manage the RSVP list of your upcoming 50th birthday. As you\'d requested, attached to this email is the list of those that have made a reservation for your event as at the end of June. Reservations will now be closed.'
+      }
     }],
-    text: `Hi, ${client.name}. I attached Excel file with list of your party guests bellow. Also, you can find list of your wishes here: https://party-system-rsvp.vercel.app/e/juliet-ogbu/wishes-list`,
+    templateId: 'd-d888c3bc052a4b249022d26a6174bc16',
+    // text: `Hi, ${client.name}. I attached Excel file with list of your party guests bellow. Also, you can find list of your wishes here: https://party-system-rsvp.vercel.app/e/juliet-ogbu/wishes-list`,
     attachments: [
       {
         content: attachment,

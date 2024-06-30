@@ -3,7 +3,8 @@ import fs from 'fs';
 import { Client, Guest } from '@prisma/client';
 import { invalidExtraPersonName } from '@/src/utills/invalid-extra-person-name';
 
-export const excelDoc = (arr: Guest[], client: Client) => {
+
+export const excelDoc = (arr: Guest[], client: Client, wishes: any[]) => {
   let workbook = new Excel.Workbook();
   let worksheet = workbook.addWorksheet('Guests List');
 
@@ -64,6 +65,27 @@ export const excelDoc = (arr: Guest[], client: Client) => {
   worksheet.getCell('B' + (arr.length + 4)).alignment = {wrapText: true};
   // worksheet.getCell('C' + (arr.length + 4)).value = '(number) - count of invalid second person name';
   // worksheet.getCell('C' + (arr.length + 4)).alignment = {wrapText: true};
+
+  let wishesPage = workbook.addWorksheet('Guests Wishes');
+  wishesPage.columns = [
+    {header: '#', key: 'index', width: 10},
+    {header: 'Guest name', key: 'name', width: 25},
+    {header: 'Wish', key: 'text', width: 50},
+  ];
+  wishesPage.getRow(1).font = {bold: true};
+
+  wishes.forEach((wish, i) => {
+    wishesPage.addRow({
+      index: i + 1,
+      name: wish?.name,
+      text: wish?.text,
+    });
+    wishesPage.getCell('B' + (i + 1)).font = {bold: true};
+    wishesPage.getCell('B' + (i + 1)).alignment = {wrapText: true};
+    wishesPage.getCell('C' + (i + 1)).alignment = {wrapText: true};
+  })
+
+  wishesPage.addRow({index: '', name: ''});
 
   const path = './excels-files/' + client.name + Date.now() + '.xlsx';
   return workbook.xlsx.writeFile(path).then(() => path);
