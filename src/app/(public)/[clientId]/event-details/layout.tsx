@@ -8,8 +8,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     ...JulietSettings.metadata,
-    title: '28/09/24: Juliet\'s 50th Birthday Party',
-    description: 'Party details: 28/09/24 5:00 PM',
+    title: 'Juliet\'s 50th Birthday Party',
+    // description: 'Party details: 28/09/24 5:00 PM',
+    openGraph: {
+      ...JulietSettings.metadata?.openGraph,
+      description: 'Party details: 28/09/24 5:00 PM',
+    }
   };
 }
 

@@ -26,9 +26,10 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
 };
 
 export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
-  if (!client?.invitationEmailId) {
-    return NextResponse.json(guest);
-  }
+  // console.log(client);
+  // if (!client?.invitationEmailId) {
+  //   return NextResponse.json(guest);
+  // }
 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   const url = process.env.NEXTAUTH_URL;
@@ -47,14 +48,15 @@ export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
     }]
   };
 
-  return sendSingleEvent(msg, guest);
+  // console.log(msg);
+  return await sendSingleEvent(msg);
 };
 
-const sendSingleEvent = async (msg: MailDataRequired, guest?: any) => {
+const sendSingleEvent = async (msg: MailDataRequired) => {
   return await sgMail.sendMultiple(msg)
     .then(() => {
       console.log('Email sent');
-      return NextResponse.json(guest);
+      return NextResponse.json(msg);
     })
     .catch((error) => {
       console.error(JSON.stringify(error));
