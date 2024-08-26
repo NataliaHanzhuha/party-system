@@ -17,7 +17,7 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
         dynamic_template_data: {name: item.name}
       };
     }),
-    from: 'nataliiahanzhuha@gmail.com',
+    from: 'donotreply.partysystem@gmail.com',
     subject: 'Jonathan Aremu Party',
     templateId: templateId
   };
@@ -25,7 +25,7 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
   sendManyEmailsRequest(msg);
 };
 
-export const sendNewGuestEvent = async (client: IClient, guest: Guest, templateId: string | null = 'd-b914ec82275540e28d3bdffa31a0ae5d') => {
+export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
   if (!client?.invitationEmailId) {
     return NextResponse.json(guest);
   }
@@ -35,7 +35,7 @@ export const sendNewGuestEvent = async (client: IClient, guest: Guest, templateI
   const msg: MailDataRequired = {
     subject: `Thanks for accepting ${client.name} party invitation`,
     templateId: 'd-b914ec82275540e28d3bdffa31a0ae5d',
-    from: 'nataliiahanzhuha@gmail.com',
+    from: 'donotreply.partysystem@gmail.com',
     personalizations: [{
       to: {email: guest.email},
       dynamicTemplateData: {
@@ -80,7 +80,7 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
   const pathToAttachment = path.resolve(link1);
   const attachment = fs.readFileSync(pathToAttachment).toString('base64');
   const msg = {
-    from: 'nataliiahanzhuha@gmail.com',
+    from: 'donotreply.partysystem@gmail.com',
     subject: 'Party Guest List',
     personalizations: [{
       to: {email: client.email},
