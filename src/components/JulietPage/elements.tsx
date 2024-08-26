@@ -47,17 +47,20 @@ export const CustomThemeWrapper = ({children}: any) => {
 };
 
 export const finalTmpl = (name: string, id: string) => <div style={{alignSelf: 'start', textAlign: 'center'}}>
-  <h2>Thank you for your RSVP; see events details below:</h2>
+  <h2>Thanks for accepting <u>Juliet Ogbu 50th Birthday</u>;<br /> See events details below:</h2>
+
   <p><strong>Address:</strong> Scarpetta at Riviera Hotel, 3525 26th Street NE, T1Y7E3</p>
+  <p><strong>Date & Time:</strong> 28/09/2024 5:00 PM</p>
   <p className={styles.dressCode}><strong>Dress code: </strong>Red carpet worthy.</p>
   <p className={styles.details}><strong>Ladies: </strong>Sequined dinner dress.</p>
   <p className={styles.details}><strong>Men: </strong>Black suit.</p>
+  <p><strong>Gifts: </strong> We will appreciate it if there are no boxed gifts, envelopes and spraying will be accepted.</p>
 
   <p> To leave a wish for {name}, click
     <Link className={styles.link}
           href={`../../${id}/wishes`}> HERE</Link></p>
 
-  <p>More details have been sent to your email provided</p>
+  {/*<p>More details have been sent to your email provided</p>*/}
 </div>;
 
 export const firstFormReject = (name: string, id: string) => <div className={styles.notification}>
