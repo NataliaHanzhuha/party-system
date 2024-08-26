@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
 import { Guest } from '@prisma/client';
 import { sendNewGuestEvent } from '@/src/utills/sendGrid';
-import { PageView } from '@/types/types';
 import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
 
 export async function GET(request: NextRequest) {
@@ -65,13 +64,13 @@ export async function POST(request: NextRequest) {
         // templateId = client.settings[PagesViews.MEDIA_MANAGEMENT];
       }
 
-      let templateId: string | null = null;
+      // let templateId: string | null = null;
+      //
+      // if (type === PagesViews.RSVP) {
+      //   templateId = client.settings[PagesViews.RSVP]?.templateId;
+      // }
 
-      if (type === PagesViews.RSVP) {
-        templateId = client.settings[PagesViews.RSVP]?.templateId;
-      }
-
-      return await sendNewGuestEvent(client, guest as Guest, templateId);
+      return await sendNewGuestEvent(client, guest as Guest);
     }
   }
 
