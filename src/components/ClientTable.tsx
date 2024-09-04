@@ -56,11 +56,11 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
   const resendEmail = async (guestId: string) => {
     const message = await axios.get('/api/guest/email?id=' + guestId + '&clientId=' + id);
     message
-      ? messageApi.success('Invitation email for guest was resent successfully!')
+      ? messageApi.success('Email for guest was resent successfully!')
       : messageApi.error('Request failed');
   };
 
-  console.log(emptyPermission);
+
   const domain: string = data?.name
     ?.split(' ')
     ?.map((word: string) => word.toLowerCase())
@@ -114,41 +114,52 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
       </Space>,
     },
     {
-      type: 'divider',
+      key: 'resend emails',
+      label: 'Resend email for all accepted',
+      onClick: async() => {
+        console.log('hyi');
+        const message = await axios.get('/api/client/email?clientId=' + id);
+        message
+          ? messageApi.success('Email for guests sent successfully!')
+          : messageApi.error('Request failed');
+      }
     },
-    {
-      key: 'publicPages',
-      disabled: !data?.settings[PagesViews.PARTY_SITE],
-      label: <Link href={partySitePath(domain)}>Party Site</Link>
-    },
-    {
-      key: 'wishesList',
-      disabled: !data?.settings[PagesViews.WISHES],
-      label: <Space>
-        <UnorderedListOutlined/>
-        <RoledLink title={'Wishes List'}
-                   forAll={true}
-                   url={wishesListPath(domain)}/>
-      </Space>,
-    },
-    {
-      key: 'rsvp',
-      disabled: !data?.settings[PagesViews.RSVP],
-      label: <Space>
-        <UserAddOutlined/>
-        <RoledLink title={'RSVP'}
-                   url={rsvpPath(domain)}/>
-      </ Space>
-    },
-    {
-      key: 'media',
-      disabled: !data?.settings[PagesViews.MEDIA_MANAGEMENT],
-      label: <Space>
-        <UserAddOutlined/>
-        <RoledLink title={'Media Management'}
-                   url={mediaPath(domain)}/>
-      </ Space>
-    },
+    // {
+    //   type: 'divider',
+    // },
+    // {
+    //   key: 'publicPages',
+    //   disabled: !data?.settings[PagesViews.PARTY_SITE],
+    //   label: <Link href={partySitePath(domain)}>Party Site</Link>
+    // },
+    // {
+    //   key: 'wishesList',
+    //   disabled: !data?.settings[PagesViews.WISHES],
+    //   label: <Space>
+    //     <UnorderedListOutlined/>
+    //     <RoledLink title={'Wishes List'}
+    //                forAll={true}
+    //                url={wishesListPath(domain)}/>
+    //   </Space>,
+    // },
+    // {
+    //   key: 'rsvp',
+    //   disabled: !data?.settings[PagesViews.RSVP],
+    //   label: <Space>
+    //     <UserAddOutlined/>
+    //     <RoledLink title={'RSVP'}
+    //                url={rsvpPath(domain)}/>
+    //   </ Space>
+    // },
+    // {
+    //   key: 'media',
+    //   disabled: !data?.settings[PagesViews.MEDIA_MANAGEMENT],
+    //   label: <Space>
+    //     <UserAddOutlined/>
+    //     <RoledLink title={'Media Management'}
+    //                url={mediaPath(domain)}/>
+    //   </ Space>
+    // },
     {
       type: 'divider',
     },

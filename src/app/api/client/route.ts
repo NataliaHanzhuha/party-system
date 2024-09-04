@@ -1,6 +1,5 @@
 import { db } from '@/src/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { Client, Guest } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   const id: string | null = request.nextUrl.searchParams.get('id');

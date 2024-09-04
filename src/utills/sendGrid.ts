@@ -25,12 +25,34 @@ export const sendManyEmails = async (emails: any, templateId: string) => {
   sendManyEmailsRequest(msg);
 };
 
-export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
-  // console.log(client);
-  // if (!client?.invitationEmailId) {
-  //   return NextResponse.json(guest);
-  // }
+export const sendEmailToManyGuests = async (client: IClient) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+  const url = process.env.NEXTAUTH_URL;
+  const msg: MailDataRequired = {
+    templateId: 'd-b914ec82275540e28d3bdffa31a0ae5d',
+    from: 'donotreply.partysystem@gmail.com',
+    personalizations: (client?.guests ?? [])
+      ?.filter((guest: Guest) => guest?.status === 'NEW' || guest?.status === 'EDITED')
+      ?.map((guest: Guest) => {
+      return {
+        to: {email: guest.email},
+        dynamicTemplateData: {
+          guestName: guest.name,
+          clientName: client.name,
+          weblink_edited: `${url}${guest?.clientId}/invitation/${guest.id}`,
+          weblink_reject: `${url}${guest?.clientId}/cancel/${guest.id}`
+        }
+      }
+    })
+  };
 
+  console.log(msg, JSON.stringify(msg.personalizations?.length));
+
+  // return NextResponse.json(msg);
+  return await sendManyEmailsRequest(msg);
+};
+
+export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   const url = process.env.NEXTAUTH_URL;
   const msg: MailDataRequired = {
@@ -64,8 +86,8 @@ const sendSingleEvent = async (msg: MailDataRequired) => {
     });
 };
 
-const sendManyEmailsRequest = (msg: MailDataRequired) => {
-  sgMail
+const sendManyEmailsRequest = async (msg: MailDataRequired) => {
+  return await sgMail
     .sendMultiple(msg)
     .then(() => {
       console.log('Email sent');
