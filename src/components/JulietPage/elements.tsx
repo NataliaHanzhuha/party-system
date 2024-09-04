@@ -48,7 +48,7 @@ export const CustomThemeWrapper = ({children}: any) => {
 
 export const finalTmpl = (name: string, id: string) => <div style={{alignSelf: 'start'}}>
   <p>Just a quick reminder that <u><i>Juliet&#39;s 50th birthday</i></u> celebration is almost here!<br/></p>
-  <p><b>Date:</b> Saturday, September 28th, 2024<br/><b>Time:</b> 5:00 PM PROMT</p>
+  <p><b>Date:</b> Saturday, September 28th, 2024<br/><b>Time:</b> 5:00 PM PROMPT</p>
   <p><b>Venue:</b> Scarpetta at the Riviera 3525 26th Street NE Calgary, AB T1Y7E3 Canada<br/></p>
   <p><b>Dress Code:</b> Red Carpet Worthy<br/><b>Women:</b> Sequined dinner dress<br/><b>Men:</b> Black Suit</p>
   <p>It&#39;s an <u>Adult only</u> party<br/></p>
