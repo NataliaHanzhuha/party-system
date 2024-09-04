@@ -46,21 +46,21 @@ export const CustomThemeWrapper = ({children}: any) => {
   </div>;
 };
 
-export const finalTmpl = (name: string, id: string) => <div style={{alignSelf: 'start', textAlign: 'center'}}>
-  <h2>Thanks for accepting <u>Juliet Ogbu 50th Birthday</u>;<br /> See events details below:</h2>
+export const finalTmpl = (name: string, id: string) => <div style={{alignSelf: 'start'}}>
+  <p>Just a quick reminder that <u><i>Juliet&#39;s 50th birthday</i></u> celebration is almost here! If you can’t attend, please click cancel
+     reservation.<br/></p>
+  <p><b>Date:</b> Saturday, September 28th, 2024<br/><b>Time:</b> 5:00 PM PROMT</p>
+  <p><b>Venue:</b> Scarpetta at the Riviera 3525 26th Street NE Calgary, AB T1Y7E3 Canada<br/></p>
+  <p><b>Dress Code:</b> Red Carpet Worthy<br/><b>Women:</b> Sequined dinner dress<br/><b>Men:</b> Black Suit</p>
+  <p>It&#39;s an <u>Adult only</u> party<br/></p>
+  <p>We request <u>no boxed gifts</u> — only <i>envelopes</i> and <i>spraying.</i><br/></p>
+  <p>Looking forward to celebrating with you!<br/></p>
+  <i>Cheers,<br/>Juliet Ogbu-Oraelosi and Family</i>
+  <hr />
 
-  <p><strong>Address:</strong> Scarpetta at Riviera Hotel, 3525 26th Street NE, T1Y7E3</p>
-  <p><strong>Date & Time:</strong> 28/09/2024 5:00 PM</p>
-  <p className={styles.dressCode}><strong>Dress code: </strong>Red carpet worthy.</p>
-  <p className={styles.details}><strong>Ladies: </strong>Sequined dinner dress.</p>
-  <p className={styles.details}><strong>Men: </strong>Black suit.</p>
-  <p><strong>Gifts: </strong> We will appreciate it if there are no boxed gifts, envelopes and spraying will be accepted.</p>
-
-  <p> To leave a wish for {name}, click
+  <p> To leave a wish for Juliet, click
     <Link className={styles.link}
           href={`../../${id}/wishes`}> HERE</Link></p>
-
-  {/*<p>More details have been sent to your email provided</p>*/}
 </div>;
 
 export const firstFormReject = (name: string, id: string) => <div className={styles.notification}>
@@ -75,12 +75,12 @@ export const rsvpFinishedBanner = (name: string) => <div className={styles.notif
   <p>Thank you for your time</p>
 </div>;
 
-  export const firstForm = (
+export const firstForm = (
   message: string,
   confirm: () => void,
   cancel: () => void,
   extra?: any
-  ) => <div className={styles.firstFormWrapper}>
+) => <div className={styles.firstFormWrapper}>
   <h2 className={styles.heading}>{message}</h2>
 
   {extra}
@@ -98,4 +98,4 @@ export const rsvpFinishedBanner = (name: string) => <div className={styles.notif
   </Flex>
 </div>;
 
-  export const positiveCancelAnswer = <div className={styles.notification}>Your Reservation is now cancelled.</div>;
+export const positiveCancelAnswer = <div className={styles.notification}>Your Reservation is now cancelled.</div>;

@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.error();
   }
 
-  const filePath = await excelDoc(client?.guests, client, client?.wishes);
+  const filePath = await excelDoc(
+    client?.guests.filter((guests: any) => guests?.status !== 'REJECTED'),
+    client,
+    client?.wishes);
   return await sendEmailWithGuestsList(client, filePath);
   // return  NextResponse.json(null);
 }

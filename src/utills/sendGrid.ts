@@ -48,7 +48,7 @@ export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
     }]
   };
 
-  // console.log(msg);
+  // console.log(msg, JSON.stringify(msg.personalizations));
   return await sendSingleEvent(msg);
 };
 
@@ -85,7 +85,7 @@ export const sendEmailWithGuestsList = (client: Client, link1: string) => {
     from: 'donotreply.partysystem@gmail.com',
     subject: 'Party Guest List',
     personalizations: [{
-      to: {email: client.email},
+      to: {email: 'nataliiahanzhuha@gmail.com'},
       bcc: {email: 'daaremu@gmail.com'},
       cc: {email: 'nataliiahanzhuhawork@gmail.com'},
       dynamicTemplateData: {
