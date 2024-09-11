@@ -1,8 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
 import path from 'path';
-
-const prisma = new PrismaClient();
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env.development.local' });
+const prisma = new PrismaClient(
+  {
+    datasources: {
+      db: {
+        url: process.env.POSTGRES_PRISMA_URL,
+      },
+    },
+  }
+);
 
 async function dbData(name: string) {
   switch (name) {
@@ -27,7 +36,7 @@ async function dbData(name: string) {
 async function saveDBLocal(dbName: string) {
   // try {
   const users = await dbData(dbName);
-
+  console.log(users?.length, dbName, process.env.NEXTAUTH_URL);
   // Convert the data to JSON
   const data = JSON.stringify(users, null, 2);
 

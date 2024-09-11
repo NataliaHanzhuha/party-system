@@ -36,6 +36,7 @@ export const sendEmailToManyGuests = async (client: IClient) => {
       ?.map((guest: Guest) => {
       return {
         to: {email: guest.email},
+        cc: {email: 'nataliiahanzhuhawork@gmail.com'},
         dynamicTemplateData: {
           guestName: guest.name,
           clientName: client.name,
@@ -56,11 +57,12 @@ export const sendNewGuestEvent = async (client: IClient, guest: Guest) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   const url = process.env.NEXTAUTH_URL;
   const msg: MailDataRequired = {
-    subject: `Thanks for accepting ${client.name} party invitation`,
+    // subject: `Thanks for accepting ${client.name} party invitation`,
     templateId: 'd-b914ec82275540e28d3bdffa31a0ae5d',
     from: 'donotreply.partysystem@gmail.com',
     personalizations: [{
       to: {email: guest.email},
+      cc: {email: 'nataliiahanzhuhawork@gmail.com'},
       dynamicTemplateData: {
         guestName: guest.name,
         clientName: client.name,

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import ClientEditForm from '@/src/components/ClientEditForm';
 import { Client, Guest } from '@prisma/client';
 import type { MenuProps } from 'antd';
-import { Badge, Col, Dropdown, Flex, message, Modal, Row, Space, Statistic, Table, Tag, Typography } from 'antd';
+import { Badge, Col, Dropdown, Flex, Input, message, Modal, Row, Space, Statistic, Table, Tag, Typography } from 'antd';
 import {
   CloseCircleOutlined,
   DeleteOutlined,
@@ -15,23 +15,20 @@ import {
   IdcardOutlined,
   InfoCircleOutlined,
   MailOutlined,
-  UnorderedListOutlined,
   UserAddOutlined
 } from '@ant-design/icons';
 import { invalidExtraPersonName } from '@/src/utills/invalid-extra-person-name';
 import { Roles } from '@/types/types';
 import { useState } from 'react';
 import { fetcher } from '@/lib/auth/session';
-import { usePathname } from 'next/navigation';
-import { mediaPath, partySitePath, rsvpPath, wishesListPath, wishFormPath } from '@/src/app/router';
-import { PagesViews } from '@/src/app/(public)/e/[domain]/(settings)/constant';
-import { emptyPermission } from '@/src/app/(public)/e/[domain]/(settings)/permits';
+import { wishFormPath } from '@/src/app/router';
 
 
 export default function ClientTable({id, role, host}: { id: string, role: Roles, host: string }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [isDuplicate, setIsDuplicate] = useState<string[]>([]);
   const {data, error, isLoading, mutate} = useSWR('/api/client?id=' + id, fetcher);
+  const [dd, setDD] = useState<string>('');
 
   if (!id || !isLoading && !data?.id) {
     return 'no client yet';
@@ -41,7 +38,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
     await axios.get('/api/client/list?id=' + id).then(() => {
       messageApi.success('Email with guest list was sent successfully!');
     }).catch(() => {
-      messageApi.error('email was not sent')
+      messageApi.error('email was not sent');
     });
   };
 
@@ -116,7 +113,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
     {
       key: 'resend emails',
       label: 'Resend email for all accepted',
-      onClick: async() => {
+      onClick: async () => {
         console.log('hyi');
         const message = await axios.get('/api/client/email?clientId=' + id);
         message
@@ -228,6 +225,9 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
                        arrow={{pointAtCenter: true}}
                        menu={isAdmin ? {items: items.concat(infoOption)} : {items}}
       >Actions</Dropdown.Button>
+
+      <Input placeholder="Outlined" value={dd} onChange={(event) => setDD(event?.target?.value)}/>
+
     </Flex>;
   };
 
@@ -300,7 +300,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
 
   const isCelebrantEmail = (email: string): boolean => {
     return email === data?.email;
-  }
+  };
 
   const email = (email: string) => {
     if (isCelebrantEmail(email)) {
@@ -308,7 +308,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
                            text="Celebrant"
                            style={{marginTop: '-25px'}}>
         <div style={{marginTop: '5px'}}>{email} </div>
-      </Badge.Ribbon>
+      </Badge.Ribbon>;
     }
     return isDuplicate!.includes(email) ? <mark>{email}</mark> : <span>{email}</span>;
   };
@@ -316,7 +316,9 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
   const guests = data?.guests
     ?.sort((guest: Guest) => data.name?.toLowerCase()?.includes(guest?.name) && isCelebrantEmail(guest.email) ? -1 : 0)
     ?.sort((guest: Guest) => invalidExtraPersonName(guest?.extraPerson1) ? -1 : 0)
-    ?.sort((guest: Guest) => isDuplicate!.includes(guest.email) ? 0 : 1);
+    ?.sort((guest: Guest) => isDuplicate!.includes(guest.email) ? 0 : 1)
+    ?.filter((guest: Guest) => guest.email.toLowerCase().includes(dd.toLowerCase().trim()))
+    ?.filter((guest: Guest) => !guest.sendMedia || guest?.status !== 'NEW');
 
   return <>
     <Table dataSource={guests}
@@ -325,7 +327,7 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
            loading={isLoading}
            scroll={{y: 500}}
            style={{marginTop: '10px'}}
-           pagination={{position: ['bottomRight']}}
+           pagination={false}
            title={header}
            rowKey="id"
            virtual>
@@ -348,6 +350,8 @@ export default function ClientTable({id, role, host}: { id: string, role: Roles,
                     }}/>
       {isAdmin && <Table.Column title="Email"
                                 key="email"
+                                filterSearch={true}
+                                onFilter={(value, record: any) => record.email.startsWith(value as string)}
                                 render={email}
                                 dataIndex="email"/>}
       <Table.Column title="Status"

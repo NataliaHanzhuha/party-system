@@ -1,0 +1,51 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.input {
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 25px;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: #862424;
+  margin: 0;
+}
+
+input + .error, .error + label {
+  margin-bottom: 0;
+}
+
+.button {
+  background: #85785e;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 40px;
+  font-size: 20px;
+  color: #ffffffba;
+}
+
+.button:disabled {
+  border-color: darkgray;
+  cursor: not-allowed;
+  color: darkgray;
+  background-color: transparent;
+}
+
+.p {
+  margin: 0;
+}

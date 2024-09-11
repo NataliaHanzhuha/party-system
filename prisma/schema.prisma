@@ -38,6 +38,7 @@ model Guest {
   status       GuestStatus @default(NEW)
   email        String
   client       Client?     @relation(fields: [clientId], references: [id])
+  sendMedia    Boolean?
 }
 
 model Wish {

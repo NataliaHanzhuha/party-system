@@ -4,8 +4,17 @@ import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
 import { IClient } from '@/types/types';
 import { log } from 'node:util';
-
-const prisma = new PrismaClient();
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env.development.local' });
+const prisma = new PrismaClient(
+  {
+    datasources: {
+      db: {
+        url: process.env.POSTGRES_PRISMA_URL,
+      },
+    },
+  }
+);
 
 const arr = ['client', 'guest', 'admin', 'emailTemplateDetails', 'wish'];
 
@@ -46,6 +55,7 @@ async function dbData(name: string, data: any) {
         clientId: data?.clientId,
         extraPerson1: data?.extraPerson1 ?? null,
         status: data?.status ?? 'NEW',
+        sendMedia: data?.sendMedia
       };
 
       return prisma.guest.upsert({
